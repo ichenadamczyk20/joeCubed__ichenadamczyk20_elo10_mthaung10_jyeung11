@@ -81,6 +81,10 @@ def logout():
         session["error_msg"] = "You weren't logged in"
     
     return redirect("/login")
+
+@app.route("/list/<category>", methods=["GET"])
+def list(category):
+    return render_template("generic_list.html")
     
     
 

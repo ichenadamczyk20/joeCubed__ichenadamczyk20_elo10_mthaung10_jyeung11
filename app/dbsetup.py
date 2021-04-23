@@ -15,9 +15,9 @@ def createTables():
     
     command += "CREATE TABLE users(username TEXT, password TEXT, id INTEGER PRIMARY KEY AUTOINCREMENT);"
 
-    command += "CREATE TABLE favorited(userid INTEGER, listid INTEGER, id INTEGER PRIMARY KEY AUTOINCREMENT);"
+    command += "CREATE TABLE favorited(userid INTEGER, listid TEXT, itemid INTEGER, id INTEGER PRIMARY KEY AUTOINCREMENT);"
 
-    command += "CREATE TABLE listn(title TEXT, picture TEXT, descriptions TEXT, flairs TEXT, id INTEGER PRIMARY KEY AUTOINCREMENT);"
+    command += "CREATE TABLE lists(title TEXT, picture TEXT, descriptions TEXT, flairs TEXT, listid TEXT, id INTEGER PRIMARY KEY AUTOINCREMENT);"
 
     c.executescript(command)
     db.commit()

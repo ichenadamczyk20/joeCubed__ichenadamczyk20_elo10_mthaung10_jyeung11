@@ -17,3 +17,16 @@ michelleT -- 2021-04-22 20:00
 ianC, ericL, michelleT -- 2021-04-22 21:30
   - Implemented login features: login, authenticate, register, registrate, and logout routes in flask app
 __________________________________________________
+
+ericL -- 2021-04-23 17:30
+  - Design doc: added red circle to sitemap
+  - Modified the description to use more relevant examples
+  - Added extra information and examples to each table
+  - Changed list table to be one single general table
+
+ericL, michelleT -- 2021-04-23 18:40
+  - Added many methods related to accessing and modifying data from the
+    list and favorited tables
+
+ianC -- 2021-04-23 18:00
+  - Added wikimedia search functionality
