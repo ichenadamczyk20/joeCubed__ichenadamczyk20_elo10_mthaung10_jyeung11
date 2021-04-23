@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8" />
+        <title>Log In — Ample Examples</title>
+    </head>
+    <body>
+        <h1 class="title">Log In!</h1>
+        {% if error_msg is defined %}
+            <p class="error-msg">{{ error_msg }}</p>
+        {% endif %}
+        {% if success_msg is defined %}
+            <p class="success-msg">{{ success_msg }}</p>
+        {% endif %}
+        <form action="/login-submit" method="POST">
+            <label for="username">Username *</label>
+            <input type="text" name="username" id="username" required />
+
+            <label for="password">Password *</label>
+            <input type="password" name="password" id="password" required />
+            
+            <input name="login" type="submit" value="Log In" />
+            <p>Not registered? <a href="/register">Register here.</a></p>
+        </form>
+    </body>
+</html>
