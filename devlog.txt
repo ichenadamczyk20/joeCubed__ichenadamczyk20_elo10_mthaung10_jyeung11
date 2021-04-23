@@ -28,5 +28,9 @@ ericL, michelleT -- 2021-04-23 18:40
   - Added many methods related to accessing and modifying data from the
     list and favorited tables
 
-ianC -- 2021-04-23 18:00
+ianC -- 2021-04-23 19:00
   - Added wikimedia search functionality
+  
+jessicaY -- 2021-04-23 19:03
+  - Added functions to pull data for dog and fruit api
+    - Pull random data or by query (ie: dog breed, fruit type)
