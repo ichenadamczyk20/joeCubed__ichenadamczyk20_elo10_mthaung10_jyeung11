@@ -1,0 +1,79 @@
+<DOCTYPE html>
+	<html>
+
+	<head>
+		<link rel="stylesheet" href="/static/css/styles.css">
+		<title>Here's your random dog!</title>
+		<!-- Compressed CSS 
+		<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/foundation-sites@6.6.3/dist/css/foundation.min.css" integrity="sha256-ogmFxjqiTMnZhxCqVmcqTvjfe1Y/ec4WaRj/aQPvn+I=" crossorigin="anonymous">
+        -->
+
+		<!-- Compressed JavaScript -->
+		<script src="https://cdn.jsdelivr.net/npm/foundation-sites@6.6.3/dist/js/foundation.min.js" integrity="sha256-pRF3zifJRA9jXGv++b06qwtSqX1byFQOLjqa2PTEb2o="
+		 crossorigin="anonymous">
+
+		</script>
+		<style>
+			img {
+				width: 15%;
+				height: auto;
+				padding: 5px;
+			}
+
+			.navs {
+				text-decoration: none;
+				background-color: gray;
+				color: black;
+				padding: 2%;
+			}
+
+		</style>
+	</head>
+
+	<body>
+		<div id="navbar">
+			<a class="navs" href="#Images">Images</a>
+            <a class="navs" href="#RNG">Random Image Generators"</a>
+			<a class="navs" href="#Nav">Navigation</a>
+		</div>
+
+        <br><br>
+
+		<h1> {{message}} {{breedQuery}} </h1>
+        <div id = "Images"
+		{% for n in images %}
+		<img src = "{{n}}"><!--loops through list of img srcs and loads each one-->
+        {% endfor %}
+        </div>
+
+        <div id = "RNG">
+        <!--Random image generators-->
+		<h1> Random image generators: </h1>
+        <h3> Note that requesting more images means a longer loading time. </h3>
+        <form action="/randomDog" method="POST">
+            How many images do you want?
+            <input type ="number" id = "numDogs" name = "numDogs" min="1" max="99" required>
+            <input name="randomDoggy" type="submit" value="Load random dog images."/>
+        </form>
+        <br>
+        <form action="/randomBreed" method="POST">
+            How many images do you want?
+            <input type ="number" id = "numDogs" name = "numDogs" min="1" max="99" required>
+            <input type="text" name="breed" id="breed" placeholder="Dog Breed" size = "10" required/>
+            <input name="randomDogBreed" type = "submit" value="Load random images of this dog breed."/>
+        </form>
+        </div>
+
+        <br>
+
+        <div id = "Nav">
+        <form action="/dog" method="POST">
+            <input type="submit" name="toDogPage" value="Back to a list of dogs">
+        </form>
+        <form action="/" method="POST">
+            <input type="submit" name="backHome" value="Back to Home">
+        </form>
+        </div>
+	</body>
+
+	</html>

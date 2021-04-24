@@ -3,27 +3,38 @@
     <head>
         <meta charset="utf-8" />
         <title>Register — Ample Examples</title>
+        <link rel="stylesheet" href="/static/css/styles.css">
+	
+		<!-- Compressed CSS -->
+		<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/foundation-sites@6.6.3/dist/css/foundation.min.css" integrity="sha256-ogmFxjqiTMnZhxCqVmcqTvjfe1Y/ec4WaRj/aQPvn+I=" crossorigin="anonymous">
+
+		<!-- Compressed JavaScript -->
+		<script src="https://cdn.jsdelivr.net/npm/foundation-sites@6.6.3/dist/js/foundation.min.js" integrity="sha256-pRF3zifJRA9jXGv++b06qwtSqX1byFQOLjqa2PTEb2o=" crossorigin="anonymous"></script>
     </head>
-    <body>
-        <h1 class="title">Register!</h1>
-        {% if error_msg is defined %}
-            <p class="error-msg">{{ error_msg }}</p>
-        {% endif %}
-        {% if success_msg is defined %}
-            <p class="success-msg">{{ success_msg }}</p>
-        {% endif %}
-        <form action="/register-submit" method="POST">
-            <label for="username">Username *</label>
-            <input type="text" name="username" id="username" required />
 
-            <label for="password">Password *</label>
-            <input type="password" name="password" id="password" required />
+    <body class="main-form">
+		<div class="grid-container fluid">
+			<div class="grid-x grid-margin-x">
+				{% if error_msg is defined %}
+					<p class="error-msg">{{ error_msg }}</p>
+				{% endif %}
+				{% if success_msg is defined %}
+					<p class="success-msg">{{ success_msg }}</p>
+				{% endif %}
+				<form action="/register-submit" method="POST">
+					<label for="username">Username *</label>
+					<input type="text" name="username" id="username" required />
 
-            <label for="password">Password confirmation *</label>
-            <input type="password" name="passwordConf" id="passwordConf" required />
-            
-            <input name="login" type="submit" value="Register" />
-            <p>Already registered? <a href="/login">Log in here.</a></p>
-        </form>
+					<label for="password">Password *</label>
+					<input type="password" name="password" id="password" required />
+
+					<label for="password">Password confirmation *</label>
+					<input type="password" name="passwordConf" id="passwordConf" required />
+					
+					<input name="login" type="submit" value="Register" class="button"/>
+					<p>Already registered? <a href="/login">Log in here.</a></p>
+				</form>
+			</div>
+		</div>
     </body>
 </html>

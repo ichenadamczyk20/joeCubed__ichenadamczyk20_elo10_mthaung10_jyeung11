@@ -1,0 +1,20 @@
+ - Build generic_list.html
+ - Build flask function list
+    - will return a random item from a list, allow you to favorite it, get a new item
+ - Build home.html
+    - shows the possible lists and allows you favorite it
+ - Build profile.html
+    - shows the favorited lists and entries for the user
+ - Build error.html
+    - shows an error for 400, 404, 405, stuff
+ - Put the api code into nice handy functions
+ - Code api code for the other two apis: edamam, trefle
+ - Build flask functionality for sending lists to home.html
+ - Build flask + js functionality for favoriting entries
+ - Build flask functionality for viewing favorited entries on profile.html
+ - Adding caching to db
+ - Style the stuff
+ - Flair searching?
+ - Add password hashing
+ - Add wikimedia api to kb
+ - Add xhttprequest documentation to https://github.com/stuy-softdev/notes-and-code20-21/tree/master/how-to

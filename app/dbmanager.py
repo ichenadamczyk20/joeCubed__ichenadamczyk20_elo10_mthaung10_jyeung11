@@ -112,9 +112,9 @@ def getAllItemsOf(listid: str) -> tuple:
 #returns a tuple in the form of (userid, listid, itemid)
 #returns none if the id query doesn't exist in the database
 def getFavoritedInfo(faveid: int) -> tuple:
-	command = 'SELECT userid, listid, itemid, id FROM favorited WHERE id=?;'
-	info = ()
-	for row in c.execute(command, [faveid]):
+    command = 'SELECT userid, listid, itemid, id FROM favorited WHERE id=?;'
+    info = ()
+    for row in c.execute(command, [faveid]):
         info += (row[0], row[1], row[2], row[3])
     if info == ():
         return None

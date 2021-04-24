@@ -35,6 +35,7 @@ def getWikipediaImg(name):
 
 if __name__ == "__main__":
     #https://dog.ceo/dog-api/
+    
     conn = http.client.HTTPSConnection("dog.ceo")
     quest = input('Would you like to see a dog of the Hound breed? ')
     #question = urllib.parse.quote(quest)
