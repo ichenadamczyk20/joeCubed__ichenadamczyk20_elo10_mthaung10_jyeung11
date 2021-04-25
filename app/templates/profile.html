@@ -1,5 +1,5 @@
-<DOCTYPE html>
-	<html>
+<!DOCTYPE html>
+<html>
 
 	<head>
 		<link rel="stylesheet" href="/static/css/styles.css">
@@ -12,7 +12,107 @@
 	</head>
 
 	<body>
+        <h1>Your list of favorites, kind user:</h1>
+        <div id = "List">
+            <table>
+                <tr>
+                    <th> Title </th>
+                    <th> Picture </th>
+                    <th> Description </th>
+                    <th> Flairs </th>
+                    {% if loggedIn %}
+                        <th> Favorite </th>
+                    {% endif %}
+                </tr>
+                {% for i in range(titles|count) %}
+                    <tr>
+                        <td> {{ titles[i] }} </td>
+                        <td> <img src= "{{ pictures[i] }}"/> </td>
+                        <td> {{ descriptions[i] }} </td>
+                        <td> {{ flairs[i] }} </td>
+                        {% if loggedIn %}
+                            <td> 
+                                <form action="/favorite" onsubmit="submitThisFavorite(this); return false;" method="POST">
+                                    <input type="hidden" name="itemID" value="{{ itemids[i] }}" />
+                                    <input type="submit" name="submit" value="Unfavorite 💔" />
+                                </form>
+                            <td>
+                        {% endif %}
+                    </tr>
+                {% endfor %}
+            </table>
 
+        </div>
+
+        <br>
+
+        <div id = "Nav">
+            <form action="/" method="POST">
+                <input type="submit" name="backHome" value="Back to Home">
+            </form>
+        </div>
 	</body>
 
-	</html>
+    <script>
+        function submitThis(form) {
+            if (window.XMLHttpRequest) {
+                //Firefox, Opera, IE7, and other browsers will use the native object
+                var xhttp = new XMLHttpRequest();
+            } else {
+                //IE 5 and 6 will use the ActiveX control
+                var xhttp = new ActiveXObject("Microsoft.XMLHTTP");
+            }
+            var submitButton = form.querySelector('[type=submit]'); //finds the submit button to disable it so people can't spam the form
+            submitButton.disabled = true;
+            xhttp.onreadystatechange = function() { //handles the response from the submit target
+                //var json = JSON.parse(xhttp.responseText)
+                document.querySelector('#thingGoesHere').innerHTML = xhttp.responseText;
+                submitButton.disabled = false;
+            };
+            xhttp.open(form.method, form.action, true); //sends form to the form action by form method
+            xhttp.setRequestHeader("Content-Type", "application/x-www-form-urlencoded"); //encodes in URL as the HTML form would
+            var data = new FormData(form); //gets the form's data
+            var obj = Object.fromEntries(data.entries()); //converts the form data into an object
+            var str = ""; //converts the object into URL-encoded data
+            for (var key in obj) {
+                if (str != "") {
+                    str += "&";
+                }
+                str += key + "=" + encodeURIComponent(obj[key]);
+            }
+            xhttp.send(str); //sends the form
+            return false;
+        }
+
+        function submitThisFavorite(form) {
+            if (window.XMLHttpRequest) {
+                //Firefox, Opera, IE7, and other browsers will use the native object
+                var xhttp = new XMLHttpRequest();
+            } else {
+                //IE 5 and 6 will use the ActiveX control
+                var xhttp = new ActiveXObject("Microsoft.XMLHTTP");
+            }
+            var submitButton = form.querySelector('[type=submit]'); //finds the submit button to disable it so people can't spam the form
+            submitButton.disabled = true;
+            xhttp.onreadystatechange = function() { //handles the response from the submit target
+                var json = JSON.parse(xhttp.responseText);
+                if (json.responseText["error"]) alert(json.responseText["error"]);
+                if (json.responseText["success"]) form.parentElement.parentElement.remove();
+                submitButton.disabled = false;
+            };
+            xhttp.open(form.method, form.action, true); //sends form to the form action by form method
+            xhttp.setRequestHeader("Content-Type", "application/x-www-form-urlencoded"); //encodes in URL as the HTML form would
+            var data = new FormData(form); //gets the form's data
+            var obj = Object.fromEntries(data.entries()); //converts the form data into an object
+            var str = ""; //converts the object into URL-encoded data
+            for (var key in obj) {
+                if (str != "") {
+                    str += "&";
+                }
+                str += key + "=" + encodeURIComponent(obj[key]);
+            }
+            xhttp.send(str); //sends the form
+            return false;
+        }
+    </script>
+</html>

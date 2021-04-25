@@ -18,3 +18,11 @@
  - Add password hashing
  - Add wikimedia api to kb
  - Add xhttprequest documentation to https://github.com/stuy-softdev/notes-and-code20-21/tree/master/how-to
+
+
+
+ to merge /dog into one page:
+
+ JSONize /getRandomDog /getRandomDogBreed
+ JSize /dog
+ 

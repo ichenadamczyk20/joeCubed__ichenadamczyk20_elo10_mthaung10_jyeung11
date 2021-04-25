@@ -7,28 +7,6 @@ import urllib.parse
 import requests
 #API STUFF END
 
-DB_FILE = "./app/db.db"
-
-db = sqlite3.connect(DB_FILE, check_same_thread=False)
-c = db.cursor()
-
-def createTables():
-
-    command = "DROP TABLE IF EXISTS users;"
-
-    command += "DROP TABLE IF EXISTS favorited;"
-
-    command += "DROP TABLE IF EXISTS listn;"
-    
-    command += "CREATE TABLE users(username TEXT, password TEXT, id INTEGER PRIMARY KEY AUTOINCREMENT);"
-
-    command += "CREATE TABLE favorited(userid INTEGER, listid TEXT, itemid INTEGER, id INTEGER PRIMARY KEY AUTOINCREMENT);"
-
-    command += "CREATE TABLE lists(title TEXT, picture TEXT, descriptions TEXT, flairs TEXT, listid TEXT, id INTEGER PRIMARY KEY AUTOINCREMENT);"
-
-    c.executescript(command)
-    db.commit()
-
 for x in range (0,5):#get an image <number> amount of times
     conn = http.client.HTTPSConnection("dog.ceo")
     conn.request('GET', '/api/breeds/image/random')
@@ -51,6 +29,3 @@ for x in range (0,5):#get an image <number> amount of times
         dbmanager.addItem(title, picture, "description", "flair", "dogs")
 
 dbmanager.showLists()
-
-if __name__ == "__main__":
-    createTables()

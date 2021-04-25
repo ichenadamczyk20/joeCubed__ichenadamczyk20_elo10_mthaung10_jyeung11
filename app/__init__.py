@@ -11,18 +11,19 @@ import requests
 
 app = Flask(__name__)
 app.secret_key = os.urandom(10)
-salt = b"We might copy a lot of things from p0 and p1, but not our salt string! Because we are safe and secure and huadsgp9aysrb86t42wbttas"
+
 
 #root route loads home page
 @app.route("/", methods=["GET", "POST"])
 def root():
 
     #checks to see if the user is already logged in
-    loggedIn = False
+    loggedIn = "false"
     if "username" in session:
-        loggedIn = True
+        loggedIn = "true"
 
     return render_template("home.html", loggedIn = loggedIn)
+
 
 #login route loads login page
 @app.route("/login", methods=["GET", "POST"])
@@ -40,18 +41,6 @@ def login():
 
     return render_template("login.html")
 
-#THIS FUNCTION NEEDS TO BE COMMENTED BY IAN LATER
-#THIS FUNCTION NEEDS TO BE COMMENTED BY IAN LATER
-#THIS FUNCTION NEEDS TO BE COMMENTED BY IAN LATER
-@app.route("/loginYT", methods=["GET", "POST"])
-def loginYT():
-    if "error_msg" in session:
-        error_msg = session.pop("error_msg")
-        return render_template("tester.html", error_msg=error_msg)
-    if "success_msg" in session:
-        success_msg = session.pop("success_msg")
-        return render_template("tester.html", success_msg=success_msg)
-    return render_template("tester.html")
 
 #login submit route handles the form submission from pressing the login button on the login page
 @app.route("/login-submit", methods=["POST"])
@@ -73,6 +62,7 @@ def authenticate():
     #if the check fails, returns the type of error message explaining what failed
     session["error_msg"] = loginInfo[1]
     return redirect("/login")
+
 
 #register route returns the register page
 @app.route("/register", methods=["GET", "POST"])
@@ -110,6 +100,7 @@ def registrate():
     session["success_msg"] = "Success!"
     return redirect("/login")
 
+
 #logout route logs the user out
 @app.route("/logout", methods=["GET", "POST"])
 def logout():
@@ -119,14 +110,19 @@ def logout():
         username = session.pop("username")
         session.pop("password")
         session.pop("userid")
-        session["success_msg"] = "Logged you out! See you again,", username
-        return render_template("login.html")
+        session["success_msg"] = "Logged you out! See you again, " + username
+        return redirect("/")
     else:
         session["error_msg"] = "You weren't logged in"
 
-    return redirect("/login")
+    return redirect("/")
 
 #list category route loads relevant info from the db
+
+#apis = {
+#    "dog": callThisFunction,
+#    "fruit": callThisFunction
+#}
 @app.route("/list/<category>", methods=["GET"])
 def list(category):
 
@@ -145,12 +141,37 @@ def list(category):
         itemids.append(itemInfo[5])
 
     #pass the mini db to the list page
-    return render_template("generic_list.html", titles=titles, pictures=pictures, descriptions=descriptions, \
+    return render_template("generic_list.html", titles=titles, pictures=pictures, \
+        descriptions=descriptions, flairs=flairs, listids=listids, itemids=itemids, category=category)
+    # HEY ERIC! HEY JESSICA!
+    # WE NEED LIST OF "favorites"
+
+
+#profile route loads the profile page
+@app.route("/profile", methods=["GET", "POST"])
+def profile():
+    if not "username" in session:
+        session["error_msg"] = "You must be logged in to have a profile page!"
+        return redirect("/")
+    favorites = db.getAllFavoritedItemsOf(session["userid"])
+    titles, pictures, descriptions, flairs, listids, itemids = [], [], [], [], [], []
+    if favorites != None:
+        for i in favorites:
+            info = getItemInfo(i)
+            titles += info[0]
+            pictures += info[1]
+            description += info[2]
+            flairs += info[3]
+            listids += info[4]
+            itemids += info[5]
+    return render_template("profile.html", titles=titles, pictures=pictures, descriptions=descriptions, \
             flairs=flairs, listids=listids, itemids=itemids)
+
 
 @app.route("/dog", methods=["GET", "POST"])
 def dogsite():
     return render_template("dog.html")
+
 
 #API STUFF START
 #https://dog.ceo/dog-api/
@@ -172,7 +193,8 @@ def getRandomDog():
         message = "Here are your " + str(number) + " random dog images!"
 
     return render_template("randomDog.html", images = list, message = message)
-    
+
+
 @app.route("/randomBreed", methods=["GET", "POST"])
 def getRandomBreed():
     number = int(request.form["numDogs"]) #requested number of images
@@ -193,6 +215,19 @@ def getRandomBreed():
 
     return render_template("randomDog.html", images = list, message = message, breedQuery = " of the " + dogBreed + " breed!")
 #API STUFF END
+
+
+@app.route("/favorite", methods=["POST"])
+def favorite():
+    itemID = int(request.form["itemID"])
+    # check if item is favorited or not
+    favorited = db.getFavoritedInfo(itemID)
+    if favorited:
+        db.addFavoritedItem(session["userid"], request.form["listID"], itemID)
+    else:
+        db.deleteFavorited(itemID)
+    return '{"success": "yesn\'t"}'
+
 
 if __name__ == "__main__":
     app.debug = True

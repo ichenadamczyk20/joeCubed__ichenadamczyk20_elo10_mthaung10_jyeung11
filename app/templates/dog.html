@@ -1,10 +1,10 @@
-<DOCTYPE html>
-	<html>
+<!DOCTYPE html>
+<html>
 
 	<head>
 		<link rel="stylesheet" href="/static/css/styles.css">
 
-		<!-- Compressed CSS
+		<!-- Compressed CSS 
 		<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/foundation-sites@6.6.3/dist/css/foundation.min.css" integrity="sha256-ogmFxjqiTMnZhxCqVmcqTvjfe1Y/ec4WaRj/aQPvn+I=" crossorigin="anonymous">
         -->
 
@@ -39,39 +39,76 @@
 		<div id="RNG">
 			<h1> Random image generators: </h1>
             <h3> Note that requesting more images means a longer loading time. </h3>
-			<form action="/randomDog" method="POST">
+			<form action="/randomDog" onsubmit="submitThis(this); return false;" method="POST">
 				How many images do you want?
 				<input type ="number" id = "numDogs" name = "numDogs" min="1" max="99" required>
-            <input name="randomDoggy" type="submit" value="Load random dog images."/>
-        </form>
-        <br>
-        <form action="/randomBreed" method="POST">
-            How many images do you want?
-            <input type ="number" id = "numDogs" name = "numDogs" min="1" max="99" required>
-            <input type="text" name="breed" id="breed" placeholder="Dog Breed" size = "10" required/>
-            <input name="randomDogBreed" type = "submit" value="Load random images of this dog breed."/>
-        </form>
+                <input name="randomDoggy" type="submit" value="Load random dog images."/>
+            </form>
+            <br>
+            <form action="/randomBreed" onsubmit="submitThis(this); return false;" method="POST">
+                How many images do you want?
+                <input type ="number" id = "numDogs" name = "numDogs" min="1" max="99" required>
+                <input type="text" name="breed" id="breed" placeholder="Dog Breed" size = "10" required/>
+                <input name="randomDogBreed" type = "submit" value="Load random images of this dog breed."/>
+            </form>
         </div>
 
-        <br><br>
+        <br>
+
+        <div id="thingGoesHere">
+            
+        </div>
+        
+        <br />
 
         <div id = "List">
-        <h2> List of dogs: </h2>
+            <h2> List of dogs: </h2>
 
-        <column>
-		<img src = 'https://images.dog.ceo/breeds/hound-afghan/n02088094_1007.jpg'> This is a picture of an Afghan Hound.
-        <br>
-        <img src = "https://images.dog.ceo/breeds/bulldog-french/n02108915_618.jpg"> This is a picture of a French Bulldog.
-        </column>
+            <column>
+                <img src = 'https://images.dog.ceo/breeds/hound-afghan/n02088094_1007.jpg'> This is a picture of an Afghan Hound.
+                <br>
+                <img src = "https://images.dog.ceo/breeds/bulldog-french/n02108915_618.jpg"> This is a picture of a French Bulldog.
+            </column>
         </div>
 
         <br>
 
         <div id = "Nav">
-        <form action="/" method="POST">
-            <input type="submit" name="backHome" value="Back to Home">
-        </form>
+            <form action="/" method="POST">
+                <input type="submit" name="backHome" value="Back to Home">
+            </form>
         </div>
 	</body>
 
-	</html>
+    <script>
+        function submitThis(form) {
+            if (window.XMLHttpRequest) {
+                //Firefox, Opera, IE7, and other browsers will use the native object
+                var xhttp = new XMLHttpRequest();
+            } else {
+                //IE 5 and 6 will use the ActiveX control
+                var xhttp = new ActiveXObject("Microsoft.XMLHTTP");
+            }
+            var submitButton = form.querySelector('[type=submit]'); //finds the submit button to disable it so people can't spam the form
+            submitButton.disabled = true;
+            xhttp.onreadystatechange = function() { //handles the response from the submit target
+                //var json = JSON.parse(xhttp.responseText)
+                document.querySelector('#thingGoesHere').innerHTML = xhttp.responseText;
+                submitButton.disabled = false;
+            };
+            xhttp.open(form.method, form.action, true); //sends form to the form action by form method
+            xhttp.setRequestHeader("Content-Type", "application/x-www-form-urlencoded"); //encodes in URL as the HTML form would
+            var data = new FormData(form); //gets the form's data
+            var obj = Object.fromEntries(data.entries()); //converts the form data into an object
+            var str = ""; //converts the object into URL-encoded data
+            for (var key in obj) {
+                if (str != "") {
+                    str += "&";
+                }
+                str += key + "=" + encodeURIComponent(obj[key]);
+            }
+            xhttp.send(str); //sends the form
+            return false;
+        }
+    </script>
+</html>

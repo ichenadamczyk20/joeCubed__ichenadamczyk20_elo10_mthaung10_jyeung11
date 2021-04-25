@@ -1,9 +1,14 @@
 import sqlite3
+import hashlib
 
 DB_FILE = "./app/db.db"
 
 db = sqlite3.connect(DB_FILE, check_same_thread=False)
+db.text_factory = str
 c = db.cursor()
+salt = b"We might copy a lot of things from p0 and p1, but not our salt string! Because we are safe and secure and huadsgp9aysrb86t42wbttas"
+def saltString(string, salt):
+    return hashlib.pbkdf2_hmac('sha256', string.encode('utf-8'), salt, 100000)
 
 #================================================================================
 # USER RELATED METHODS
@@ -56,7 +61,7 @@ def checkLogin(username: str, password: str) -> tuple:
     info = getUserInfo(username)
     if info == None:
         return (False, "User not found", None)
-    elif (info[0] == username) and (info[1] == password):
+    elif (info[0] == username) and (info[1] == saltString(password, salt)):
         return (True, None, info[2])
     return (False, "Incorrect username or password", None)
 
@@ -65,7 +70,7 @@ def checkLogin(username: str, password: str) -> tuple:
 # returns the unique user_id so that it can be added to the session in app.py
 def registerUser(username: str, password: str):
     command = 'INSERT INTO users VALUES (?, ?, NULL);'
-    c.execute(command, [username, password])
+    c.execute(command, [username, saltString(password, salt)])
     db.commit()
 
 #================================================================================
@@ -84,6 +89,17 @@ def getItemInfo(itemid: int) -> tuple:
         return None
     return info
 
+#retrieves all the info of an item from one of the lists given its picture url.
+#returns a tuple in the form of (title, picture, descriptions, flairs, listid, entryid)
+#returns none if the id query doesn't exist in the database
+def getItemInfoByPicture(picture: str) -> tuple:
+    command = 'SELECT title, picture, descriptions, flairs, listid, id FROM lists WHERE picture=?;'
+    info = ()
+    for row in c.execute(command, [picture]):
+        info += (row[0], row[1], row[2], row[3], row[4], row[5])
+    if info == ():
+        return None
+    return info
 
 #insert row into lists table
 def addItem(title: str, picture: str, descriptions: str, flairs: str, listid: str):
@@ -147,6 +163,30 @@ def deleteFavoritedItem(faveid: int):
     c.execute(command, [faveid])
     db.commit()
 
+#================================================================================
+# TEST METHODS
+#================================================================================
+
+#prints the entire table
+def showUsers():
+    print("users:")
+    command = 'SELECT * FROM users'
+    for row in c.execute(command):
+        print(row)
+
+#prints the entire table
+def showLists():
+    print("lists:")
+    command = 'SELECT * FROM lists'
+    for row in c.execute(command):
+        print(row)
+
+#prints the entire table
+def showFavorited():
+    print("favorited:")
+    command = 'SELECT * FROM favorited'
+    for row in c.execute(command):
+        print(row)
 
 def close():
     db.close()

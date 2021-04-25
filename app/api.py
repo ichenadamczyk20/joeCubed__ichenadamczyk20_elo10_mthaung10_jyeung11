@@ -4,10 +4,9 @@ import json
 import urllib.parse
 import requests
 
-def getRandomDog():
-    return ""
 
 def getWikipediaImg(name):
+    '''
     #wikipedia
     S = requests.Session()
 
@@ -78,4 +77,16 @@ if __name__ == "__main__":
         print ("That's unfortunate. ;v;")
 
     print()
+    '''
 
+#https://tropicalfruitandveg.com/tfvapi.php
+#https://tropicalfruitandveg.com/api/tfvrestapi2.pdf
+import urllib
+quest = input("What tropical fruit or vegetable would you like? ")
+quest = quest.replace(" ", "%20")
+link = "http://api.tropicalfruitandveg.com/tfvjsonapi.php?tfvitem=" + quest.lower()
+u = urllib.request.urlopen(link)
+response = json.loads(u.read().decode("ISO-8859-1"))
+print (response['results'][0]['tfvname']) #name of fruit/vegetable
+print (response['results'][0]['imageurl'])
+#description, uses, propagation, health, soil, climate

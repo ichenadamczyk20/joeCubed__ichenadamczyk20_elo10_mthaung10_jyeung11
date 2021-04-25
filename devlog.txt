@@ -65,3 +65,25 @@ jessicaY -- 2021-04-24 19:29
   - Some styling and a navigation bar on dog.html and randomDog.html
   - Added navigation buttons on dog.html and randomDog.html
 __________________________________________________
+
+ericL -- 2021-04-25 14:30
+  - changed logout route to redirect back to home page instead of login page
+  - some kind of table tag structure with jinja in generic_list
+  - added a new method in db to search list db by picture in order to avoid duplicate picture entries in db
+
+ianC -- 2021-04-25 16:20
+  - merged /dog into a single page
+  - added password hashing
+  - added favorite buttons to generic_list.html
+  - added list of favorites to profile.html
+  - fixed bug where javascript was not correctly loading because loggedIn was not a string with lowercase boolean
+
+ericL, jessicaY -- 2021-04-25 15:25
+  - updated dbsetup.py with a method to populate list database with dog items on initial setup of database
+
+ericL, michelleT -- 2021-04-25 16:15
+  - played around with foundation and adding in a top bar, the css didn't work, made the decision to switch to bootstrap
+
+jessicaY, ianC -- 2021-04-25 16:24
+  - tested and figured out how to pull data from tropical fruit/veg api (with its weird encoding)
+  - now accounts for more than one word answers

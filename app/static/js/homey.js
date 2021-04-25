@@ -45,9 +45,10 @@ var addRegButton = function() {
     navbar.appendChild(regBtn);
 }
 
-
+console.log(loggedIn);
 if (loggedIn) addLogoutButton(); //uses loggedIn, provided by flask/jinja var in the script above this one in home.html, to determine what buttons to add
 else {
     addLoginButton();
     addRegButton();
 }
+
