@@ -92,3 +92,15 @@ __________________________________________________
 
 ericL, jessicaY -- 2021-04-26 20:00
  - updated dbsetup.py with a script to populate the list with tropical fruit and vegetables on initial setup of db
+
+ __________________________________________________
+
+ ericL -- 2021-04-27 9:50
+ - got the generic_list.html functioning, fixed a type error in db method getAllItemInfo to do it
+ - spent a good 20 minutes finding a jinja error {$ endfor %} instead of {% endfor %}
+ - replaced /dog routing with list/dogs routing
+ - added fruits list to generic_list
+
+ jessicaY -- 2021-04-27 10:36
+ - added stuff so user can request images of multiple items/ideas/things from wiki api
+ - added get method to @app.route("/list/<category>") so that navigation links work

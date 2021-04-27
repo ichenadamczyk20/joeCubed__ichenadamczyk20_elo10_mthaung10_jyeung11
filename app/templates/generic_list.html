@@ -29,12 +29,12 @@
 	<body>
 		<div id="navbar">
 			<a class="navs" href="#RNG">Random Image Generators</a>
-			<a class="navs" href="#List">List of Dogs</a>
+			<a class="navs" href="#List">List of {{ category }}</a>
 			<a class="navs" href="#Nav">Navigation</a>
 		</div>
 
         <br><br>
-        
+    <!-- this block of code only works for dogs -->
 		<div id="RNG">
 			<h1> Random image generators: </h1>
             <h3> Note that requesting more images means a longer loading time. </h3>
@@ -51,6 +51,7 @@
                 <input name="randomDogBreed" type = "submit" value="Load random images of this {{ category }} {{ category.type }}."/>
             </form>
         </div>
+        <!--  -->
 
         <br><br>
 
@@ -96,10 +97,10 @@
                                         {% endif %}
                                     />
                                 </form>
-                            <td>
+                            </td>
                         {% endif %}
                     </tr>
-                {$ endfor %}
+                {% endfor %}
             </table>
 
         </div>
@@ -130,17 +131,8 @@
                 submitButton.disabled = false;
             };
             xhttp.open(form.method, form.action, true); //sends form to the form action by form method
-            xhttp.setRequestHeader("Content-Type", "application/x-www-form-urlencoded"); //encodes in URL as the HTML form would
             var data = new FormData(form); //gets the form's data
-            var obj = Object.fromEntries(data.entries()); //converts the form data into an object
-            var str = ""; //converts the object into URL-encoded data
-            for (var key in obj) {
-                if (str != "") {
-                    str += "&";
-                }
-                str += key + "=" + encodeURIComponent(obj[key]);
-            }
-            xhttp.send(str); //sends the form
+            xhttp.send(data); //sends the form's data
             return false;
         }
 
@@ -162,17 +154,8 @@
                 submitButton.disabled = false;
             };
             xhttp.open(form.method, form.action, true); //sends form to the form action by form method
-            xhttp.setRequestHeader("Content-Type", "application/x-www-form-urlencoded"); //encodes in URL as the HTML form would
             var data = new FormData(form); //gets the form's data
-            var obj = Object.fromEntries(data.entries()); //converts the form data into an object
-            var str = ""; //converts the object into URL-encoded data
-            for (var key in obj) {
-                if (str != "") {
-                    str += "&";
-                }
-                str += key + "=" + encodeURIComponent(obj[key]);
-            }
-            xhttp.send(str); //sends the form
+            xhttp.send(data); //sends the form's data
             return false;
         }
     </script>

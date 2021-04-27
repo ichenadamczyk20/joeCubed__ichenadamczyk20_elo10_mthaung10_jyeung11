@@ -4,21 +4,33 @@
     <head>
         <link rel="stylesheet" href="/static/css/styles.css">
 
-        <!-- Compressed CSS -->
+        <!-- Compressed CSS 
         <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/foundation-sites@6.6.3/dist/css/foundation.min.css" integrity="sha256-ogmFxjqiTMnZhxCqVmcqTvjfe1Y/ec4WaRj/aQPvn+I="
         crossorigin="anonymous">
 
-        <!-- Compressed JavaScript -->
+			Compressed JavaScript 
         <script src="https://cdn.jsdelivr.net/npm/foundation-sites@6.6.3/dist/js/foundation.min.js" integrity="sha256-pRF3zifJRA9jXGv++b06qwtSqX1byFQOLjqa2PTEb2o="
         crossorigin="anonymous">
 
-        </script>
+        </script> -->
+		
+		<!-- BOOTSTRAP -->
+
+		<!-- Required meta tags -->
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+		<!-- Bootstrap CSS -->
+		<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
     </head>
 
     <body>
         <a href="/profile">Profile page</a>
-        <form action="/dog" method="POST">
+        <form action="/list/dogs" method="POST">
             <input name="toDogPage" type="submit" value="See Dogs"/>
+        </form>
+        <form action="/list/fruits" method="POST">
+            <input name="toFruitPage" type="submit" value="See Fruits"/>
         </form>
         
         <!-- This nav block is where the logout and login buttons currently go -->
@@ -26,7 +38,21 @@
             
         </nav>
 
-		
+		<nav class="navbar sticky-top navbar-expand-lg navbar-light bg-light">
+			<a class="navbar-brand" href="#">Ample Examples</a>
+			<button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
+				<span class="navbar-toggler-icon"></span>
+			</button>
+			<div class="collapse navbar-collapse" id="navbarNavAltMarkup">
+				<div class="navbar-nav">
+				<a class="nav-item nav-link active" href="#">Home <span class="sr-only">(current)</span></a>
+				<a class="nav-item nav-link" href="/list/dogs">See Dogs</a>
+                <a class="nav-item nav-link" href="/list/fruits">See Tropical Fruits and Vegetables</a>
+				<a class="nav-item nav-link" href="/login">Login</a>
+				<a class="nav-item nav-link" href="/register">Register</a>
+				</div>
+			</div>
+		</nav>
 
 
 
@@ -35,6 +61,16 @@
             var loggedIn = {{ loggedIn }};
         </script>
         <script src="./static/js/homey.js"></script>
+
+        <!--Load images from wiki api on home page-->
+        <form action="/wikiImages" method="POST">
+            <p>Search for images of things. Each thing should be separated by a comma. If a thing exists as a wikipedia page, you will have an image for it returned.</p>
+            <p>Some examples: <br>pie, a, dream, apple pie, pi<br>wolf, fat, car, tar, water<br>gudetama, anime, science, death, bug</p> 
+            <p>Notes: <br> 1) This may also return gifs. <br> 2) Each query will always return the same image or gif. <br> 3) Have fun with it!</p>
+            <input type="text" name="queries" id="queries" placeholder="Your Queries" size = "10" required/>
+            <input type="submit" name="wikiImages" value="Load images"/>
+        </form>
+
 	</body>
 
 </html>

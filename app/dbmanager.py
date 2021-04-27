@@ -114,8 +114,8 @@ def addItem(title: str, picture: str, descriptions: str, flairs: str, listid: st
 def getAllItemsOf(listid: str) -> tuple:
     command = 'SELECT id FROM lists WHERE listid=?;'
     entries = ()
-    for row in c.execute(command, [listid]):
-        entries += row[0]
+    for row in c.execute(command, [listid]):       
+        entries += (row[0],)
     if entries == ():
         return None
     return entries

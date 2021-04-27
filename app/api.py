@@ -6,7 +6,7 @@ import requests
 
 
 def getWikipediaImg(name):
-    '''
+    
     #wikipedia
     S = requests.Session()
 
@@ -30,8 +30,12 @@ def getWikipediaImg(name):
     conn.request('GET', url)
     response = conn.getresponse()
     src = response.read().decode().split('img')[1].split('src=\\"')[1].split('\\"')[0]
-    return src
+    print()
+    print(src[2:])
 
+x = input("Item: ")
+getWikipediaImg(x)    
+'''
 if __name__ == "__main__":
     #https://dog.ceo/dog-api/
     
@@ -77,8 +81,9 @@ if __name__ == "__main__":
         print ("That's unfortunate. ;v;")
 
     print()
-    '''
-
+'''
+    
+'''
 #https://tropicalfruitandveg.com/tfvapi.php
 #https://tropicalfruitandveg.com/api/tfvrestapi2.pdf
 import urllib
@@ -90,3 +95,4 @@ response = json.loads(u.read().decode("ISO-8859-1"))
 print (response['results'][0]['tfvname']) #name of fruit/vegetable
 print (response['results'][0]['imageurl'])
 #description, uses, propagation, health, soil, climate
+'''

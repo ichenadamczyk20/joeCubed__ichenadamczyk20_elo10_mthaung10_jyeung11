@@ -123,7 +123,7 @@ def logout():
 #    "dog": callThisFunction,
 #    "fruit": callThisFunction
 #}
-@app.route("/list/<category>", methods=["GET"])
+@app.route("/list/<category>", methods=["GET", "POST"])
 def list(category):
 
     #fetch the ids of all the entries belonging to the category
@@ -157,10 +157,10 @@ def profile():
     titles, pictures, descriptions, flairs, listids, itemids = [], [], [], [], [], []
     if favorites != None:
         for i in favorites:
-            info = getItemInfo(i)
+            info = db.getItemInfo(i)
             titles += info[0]
             pictures += info[1]
-            description += info[2]
+            descriptions += info[2]
             flairs += info[3]
             listids += info[4]
             itemids += info[5]
@@ -192,7 +192,7 @@ def getRandomDog():
     else:
         message = "Here are your " + str(number) + " random dog images!"
 
-    return render_template("randomDog.html", images = list, message = message)
+    return render_template("random.html", images = list, message = message)
 
 
 @app.route("/randomBreed", methods=["GET", "POST"])
@@ -213,7 +213,42 @@ def getRandomBreed():
     else:
         message = "Here are your " + str(number) + " random dog images"
 
-    return render_template("randomDog.html", images = list, message = message, breedQuery = " of the " + dogBreed + " breed!")
+    return render_template("random.html", images = list, message = message, breedQuery = " of the " + dogBreed + " breed!")
+
+@app.route("/wikiImages", methods=["GET", "POST"])
+def wikiImages():
+    queries = request.form['queries'].rstrip(",").split(',') 
+    #rstrip removes last character if comma
+    #split creates a list by slicing at commas
+    imageSrcs = [None] * len(queries)
+    i = 0
+    for query in queries:
+        S = requests.Session()
+
+        URL = "https://en.wikipedia.org/w/api.php"
+
+        SEARCHPAGE = query
+
+        PARAMS = {
+            "action": "query",
+            "format": "json",
+            "list": "search",
+            "srsearch": SEARCHPAGE
+        }
+
+        R = S.get(url=URL, params=PARAMS)
+        DATA = R.json()
+
+        print(DATA['query']['search'][0])
+        url = "https://en.wikipedia.org/w/api.php?action=parse&pageid=" + str(DATA['query']['search'][0]['pageid']) + "&prop=text&format=json"
+        conn = http.client.HTTPSConnection("wikipedia.org")
+        conn.request('GET', url)
+        response = conn.getresponse()
+        src = response.read().decode().split('img')[1].split('src=\\"')[1].split('\\"')[0]
+        imageSrcs[i] = src
+        i += 1
+    return render_template("wiki.html", images=imageSrcs)
+
 #API STUFF END
 
 

@@ -15,25 +15,27 @@
     <body class="main-form">
 		<div class="grid-container fluid">
 			<div class="grid-x grid-margin-x">
-				{% if error_msg is defined %}
-					<p class="error-msg">{{ error_msg }}</p>
-				{% endif %}
-				{% if success_msg is defined %}
-					<p class="success-msg">{{ success_msg }}</p>
-				{% endif %}
-				<form action="/register-submit" method="POST">
-					<label for="username">Username *</label>
-					<input type="text" name="username" id="username" required />
+				<div class="translucent-form-overlay">
+					{% if error_msg is defined %}
+						<p class="error-msg">{{ error_msg }}</p>
+					{% endif %}
+					{% if success_msg is defined %}
+						<p class="success-msg">{{ success_msg }}</p>
+					{% endif %}
+					<form action="/register-submit" method="POST">
+						<label for="username">Username *</label>
+						<input type="text" name="username" id="username" required />
 
-					<label for="password">Password *</label>
-					<input type="password" name="password" id="password" required />
+						<label for="password">Password *</label>
+						<input type="password" name="password" id="password" required />
 
-					<label for="password">Password confirmation *</label>
-					<input type="password" name="passwordConf" id="passwordConf" required />
-					
-					<input name="login" type="submit" value="Register" class="button"/>
-					<p>Already registered? <a href="/login">Log in here.</a></p>
-				</form>
+						<label for="password">Password confirmation *</label>
+						<input type="password" name="passwordConf" id="passwordConf" required />
+						
+						<input name="login" type="submit" value="Register" class="button"/>
+						<p>Already registered? <a href="/login">Log in here.</a></p>
+					</form>
+				</div>
 			</div>
 		</div>
     </body>
