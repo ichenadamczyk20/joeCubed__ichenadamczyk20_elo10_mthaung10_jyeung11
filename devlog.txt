@@ -87,3 +87,8 @@ ericL, michelleT -- 2021-04-25 16:15
 jessicaY, ianC -- 2021-04-25 16:24
   - tested and figured out how to pull data from tropical fruit/veg api (with its weird encoding)
   - now accounts for more than one word answers
+
+__________________________________________________
+
+ericL, jessicaY -- 2021-04-26 20:00
+ - updated dbsetup.py with a script to populate the list with tropical fruit and vegetables on initial setup of db
