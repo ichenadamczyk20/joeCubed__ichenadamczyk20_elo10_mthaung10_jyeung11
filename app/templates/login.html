@@ -20,8 +20,31 @@
 				
     </head>
 
-    <body>
-		<div class="grid-container fluid">	
+    <body style="background-color: #f5d7fa;">
+        <nav class="sticky-top">
+            <nav class="navbar navbar-light navbar-expand-lg" style="background-color: #e3f2fd;">
+                <div class="navbar-brand" href="#">Ample Examples</div>
+                <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
+                    <div class="navbar-nav">
+                    <a class="nav-item nav-link active" href="/">Home <span class="sr-only">(current)</span></a>
+                    <a class="nav-item nav-link" href="/list/dogs">See Dogs</a>
+                    <a class="nav-item nav-link" href="/list/fruits">See Tropical Fruits and Vegetables</a>
+                    
+                    <!-- This nav block is where the logout and login buttons currently go -->
+
+                    <div id="profile"></div>
+                    <a class="nav-item nav-link" id="logout"></a>
+                    <a class="nav-item nav-link" id="login"></a>
+                    <a class="nav-item nav-link" id="register"></a>
+
+                    </div>
+                </div>
+            </nav>
+			
+		<div class="main-form">	
 			<div class="translucent-form-overlay">
 			{% if error_msg is defined %}
 				<p class="error-msg">{{ error_msg }}</p>
@@ -32,40 +55,23 @@
 				<form action="/login-submit" method="POST">
 					<div class="form-group">
 						<div class="row columns">
-							<label for="username" required>Username <span style="color:#d4332a">*</label>
+							<label style="margin-left: 15px;" for="username" required>Username <span style="color:#d4332a">*</label>
 							<input type="text" name="username" id="username" required />
 						</div>
 					</div>
 
 					<div class="form-group">
 						<div class="row columns">
-							<label for="password" required>Password <span style="color:#d4332a">*</label>
+							<label style="margin-left: 15px;" for="password" required>Password <span style="color:#d4332a">*</label>
 							<input type="password" name="password" id="password" required />
 						</div>
 					</div>
 
 					<!--<input name="login" type="submit" value="Log In" class="button"/> -->
-					<button type="submit" class="btn btn-primary">Login</button>
+					<button style="margin-bottom: 5px" type="submit" class="btn btn-primary">Login</button>
 					<p>Not registered? <a href="/register">Register here.</a></p>
 				</form>
 			</div>
 		</div>
-
-		<!-- <form>
-			<div class="form-group">
-				<label for="exampleInputEmail1">Email address</label>
-				<input type="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Enter email">
-				<small id="emailHelp" class="form-text text-muted">We'll never share your email with anyone else.</small>
-			</div>
-			<div class="form-group">
-				<label for="exampleInputPassword1">Password</label>
-				<input type="password" class="form-control" id="exampleInputPassword1" placeholder="Password">
-			</div>
-			<div class="form-check">
-				<input type="checkbox" class="form-check-input" id="exampleCheck1">
-				<label class="form-check-label" for="exampleCheck1">Check me out</label>
-			</div>
-			<button type="submit" class="btn btn-primary">Submit</button>
-		</form> -->
     </body>
 </html>

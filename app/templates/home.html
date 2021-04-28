@@ -17,27 +17,28 @@
         <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
     </head>
 
-    <body>
+    <body style="background-color: #f5d7fa;">
 		<nav class="navbar navbar-light sticky-top navbar-expand-lg" style="background-color: #e3f2fd;">
-			<a class="navbar-brand" href="#">Ample Examples</a>
+			<div class="navbar-brand" href="#">Ample Examples</div>
 			<button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
 				<span class="navbar-toggler-icon"></span>
 			</button>
 			<div class="collapse navbar-collapse" id="navbarNavAltMarkup">
 				<div class="navbar-nav">
-				<a class="nav-item nav-link active" href="#">Home <span class="sr-only">(current)</span></a>
+				<a class="nav-item nav-link active" href="/">Home <span class="sr-only">(current)</span></a>
 				<a class="nav-item nav-link" href="/list/dogs">See Dogs</a>
                 <a class="nav-item nav-link" href="/list/fruits">See Tropical Fruits and Vegetables</a>
+
+                <!-- This nav block is where the logout and login buttons currently go -->
+
+                <div id="profile"></div>
+				<a class="nav-item nav-link" id="logout"></a>
+                <a class="nav-item nav-link" id="login"></a>
+
 				</div>
 			</div>
-		</nav> 
-
-        <a href="/profile">Profile page</a>
+		</nav>         
         
-        <!-- This nav block is where the logout and login buttons currently go -->
-        <nav id="nav">
-            
-        </nav>
 
 
         <!-- since the loggedIn script comes before the homey script, the homey script can use that variable -->
@@ -48,35 +49,15 @@
 
         <!--Load images from wiki api on home page-->
         <form action="/wikiImages" onsubmit="submitThisWiki(this); return false;" method="POST">
-            <p>Search for images of things. Not limited to physical objects. <br> Each thing should be separated by a comma. <br> If the thing exists as a wikipedia page, you will have an image for it returned.</p>
-            <p>Some examples: <br>pie, a, dream, apple pie, pi<br>wolf, fat, car, tar, water<br>gudetama, anime, science, death, bug</p> 
-            <p>Notes: <br> 1) This may also return gifs. <br> 2) Each query will always return the same image or gif. <br> 3) Have fun with it! <br> 4) You may get something completely unrelated, but most of the time this won't be the case LOL. </p>
-            <input type="text" name="queries" id="queries" placeholder="Your Queries" size = "10" required/>
-            <input type="submit" name="wikiImages" value="Load images"/>
+            <h2 style="padding-left: 2%; padding-top: 2%">Get images from the mediawiki api.</h2>             
+            <p style="padding-left: 2%; padding-top: 2%">Search for images. Not limited to physical objects. <br> An image/gif related to your query will be returned.<br>The text below the image will show what wikipedia page the image was grabbed from.<br>Some examples: pi, car, dream, on, car, thought, wisdom<br><br>Notes: <br> 1) This may also return gifs. <br> 2) Will only return a single image/gif.<br> 3) To retry for the same query, you can just press enter over and over :) <br> 4) Have fun with it! </p>
+            <input style="position:relative; left:2%;" type="text" name="queries" id="queries" placeholder="Your Queries" size = "10" required/>
+            <input style="position:relative; left:2%;" type="submit" name="wikiImages" value="Load image"/>
         </form>
-        <img src="" id="wikiImage" />
+        <img  style="padding-left: 2%;" src="" id="wikiImage" style="width: 30%; flex: 33.33%; padding: 5px;"/>
+        <p style="padding-left: 2%;" id="wikiTitle"> </p>
 
-        <script>
-            function submitThisWiki(form) {
-                if (window.XMLHttpRequest) {
-                    //Firefox, Opera, IE7, and other browsers will use the native object
-                    var xhttp = new XMLHttpRequest();
-                } else {
-                    //IE 5 and 6 will use the ActiveX control
-                    var xhttp = new ActiveXObject("Microsoft.XMLHTTP");
-                }
-                var submitButton = form.querySelector('[type=submit]'); //finds the submit button to disable it so people can't spam the form
-                submitButton.disabled = true;
-                xhttp.onreadystatechange = function() { //handles the response from the submit target
-                    //var json = JSON.parse(xhttp.responseText)
-                    document.querySelector('#wikiImage').src = xhttp.responseText;
-                    submitButton.disabled = false;
-                };
-                xhttp.open(form.method, form.action, true); //sends form to the form action by form method
-                var data = new FormData(form); //gets the form's data
-                xhttp.send(data); //sends the form's data
-            };
-        </script>
+        <script src="./static/js/formsubmit.js"></script>
 
 	</body>
 

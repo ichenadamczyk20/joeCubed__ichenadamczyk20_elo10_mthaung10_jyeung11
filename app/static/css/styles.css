@@ -1,15 +1,16 @@
 /* Login/Registration Page */
 
-.main-form {
-	margin: 10px;
-}
-
 .translucent-form-overlay {
-  max-width: 300px;
+  max-width: 500px;
+  max-height: 500px;
+  display: block;
   width: 100%; 
   background-color: rgba(54, 54, 54, 0.8);
   padding: 20px;
   color: #fefefe;
+  margin: 0;
+  position: initial;
+  top: 50%;
 }
 
 .translucent-form-overlay .columns.row {
@@ -44,6 +45,26 @@
 	text-decoration: none;
 }
 
+.main-form {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.btn btn-primary {
+	margin-left: -10px;
+}
+
+#logout {
+	position: absolute;
+	right: 0;
+}
+
+#login {
+	position: absolute;
+	right: 0;
+}
+
 /* Table for Dog and Fruits/Vegetables Pages */
 
 img {
@@ -63,4 +84,9 @@ table thead tr th:nth-child(1) {
 table tbody tr {
 	max-height: 300px;
 	max-width: 350px;
+}
+
+/* All Pages */
+body {
+	background-color: #f6c4ff;
 }

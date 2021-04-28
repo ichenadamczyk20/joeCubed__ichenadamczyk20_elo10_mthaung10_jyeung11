@@ -15,55 +15,73 @@
         <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
         <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
-				
-		<style>
-			.column {
-				flex: 33.33%;
-				padding: 5px;
-			}
-
-			.navs {
-				text-decoration: none;
-                background-color: gray;
-				color: black;
-				padding: 2%;
-			}
-		</style>
 	</head>
 
-	<body>
-		<div id="navbar">
-			<a class="navs" href="#RNG">Random Image Generators</a>
-			<a class="navs" href="#List">List of {{ category }}</a>
-			<a class="navs" href="/">Back to Home</a>
-		</div>
+	<body style="background-color: #f5d7fa;">
+        <div id="top"> </div>
+        <nav class="sticky-top">
+            <nav class="navbar navbar-light navbar-expand-lg" style="background-color: #e3f2fd;">
+                <div class="navbar-brand" href="#">Ample Examples</div>
+                <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
+                    <div class="navbar-nav">
+                    <a class="nav-item nav-link active" href="/">Home <span class="sr-only">(current)</span></a>
+                    <a class="nav-item nav-link" href="/list/dogs">See Dogs</a>
+                    <a class="nav-item nav-link" href="/list/fruits">See Tropical Fruits and Vegetables</a>
+                    
+                    <!-- This nav block is where the logout and login buttons currently go -->
 
+                    <div id="profile"></div>
+                    <a class="nav-item nav-link" id="logout"></a>
+                    <a class="nav-item nav-link" id="login"></a>
+
+                    </div>
+                </div>
+            </nav>
+
+            <nav class="navbar navbar-light navbar-expand-lg" style="background-color: #c1dff5;">
+                <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
+                    <div class="navbar-nav">
+                        <a class="nav-item nav-link" href="#top">Top of Page</a>
+                        <a class="nav-item nav-link" href="#List">List of {{ category }}</a>
+                        <a class="nav-item nav-link" href="#bottom">To Bottom of List</a>
+                    </div>
+                </div>
+            </nav> 
+        </nav> 
+         
+    
         <br><br>
     <!-- this block of code only works for dogs -->
 		<div id="RNG">
-			<h1> Random image generators: </h1>
-            <h3> Note that requesting more images means a longer loading time. </h3>
-            <h4> The limit is set to 25. </h4>
+			<h1 style ="position:relative; padding-left:2%"> Random image generators: </h1>
+            <h3 style ="position:relative; padding-left:2%"> Note that requesting more images means a longer loading time. </h3>
+            <h4 style ="position:relative; padding-left:2%"> The limit is set to 25. </h4>
             {% if category == "dogs" %}
                 <!--DOG STUFF-->
                 <form action="/randomDog" onsubmit="submitThis(this); return false;" method="POST">
-                    How many images do you want?
-                    <input type ="number" id = "numDogs" name = "numDogs" min="1" max="25" required/>
-                    <input name="randomDoggy" type="submit" value="Load random dog images."/>
+                    <p style="padding-left:2%">How many images do you want?</p>
+                    <input style="position:relative; left:2%;" type ="number" id = "numDogs" name = "numDogs" min="1" max="25" required/>
+                    <input style="position:relative; left:2%;" name="randomDoggy" type="submit" value="Load random dog images."/>
                 </form>
                 <br>
                 <form action="/randomBreed" onsubmit="submitThis(this); return false;" method="POST">
-                    How many images do you want?
-                    <input type ="number" id = "numDogs" name = "numDogs" min="1" max="25" required/>
-                    <input type="text" name="breed" id="breed" placeholder="Dog Breed" size = "10" required/>
-                    <input name="randomDogBreed" type = "submit" value="Load random images of this dog breed."/>
+                    <p style="padding-left:2%">How many images do you want?</p>
+                    <input style="position:relative; left:2%;" type ="number" id = "numDogs" name = "numDogs" min="1" max="25" required/>
+                    <input style="position:relative; left:2%;" type="text" name="breed" id="breed" placeholder="Dog Breed" size = "10" required/>
+                    <input style="position:relative; left:2%;" name="randomDogBreed" type = "submit" value="Load random images of this dog breed."/>
                 </form>
             {% else %}
                 <!-- TROPICAL STUFF -->
                 <form action="/randomTropical" onsubmit="submitThis(this); return false;" method="POST">
-                    How many images do you want?
-                    <input type = "number" id="numTropical" name="numTropical" min="1" max="25" required>
-                    <input name = "randomTropical" type="submit" value = "Load random images of tropical fruits/vegetables"/>
+                    <p style="padding-left:2%">How many images do you want?</p>
+                    <input style="position:relative; left:2%;" type = "number" id="numTropical" name="numTropical" min="1" max="25" required>
+                    <input style="position:relative; left:2%;" name = "randomTropical" type="submit" value = "Load random images of tropical fruits/vegetables"/>
                 </form>
             {% endif %}
         </div>
@@ -77,31 +95,26 @@
         <br /><br />
 
         <div id = "List">
-            <h2> List of {{ category }}: </h2>
-
-            <!-- <column>
-                <img src = 'https://images.dog.ceo/breeds/hound-afghan/n02088094_1007.jpg'> This is a picture of an Afghan Hound.
-                <br>
-                <img src = "https://images.dog.ceo/breeds/bulldog-french/n02108915_618.jpg"> This is a picture of a French Bulldog.
-            </column> -->
+            <h2 style="padding-left: 2%;"> List of {{ category }}: </h2>
+            <h3 style="padding-left: 2%;"> You can click on an image to open it in a new tab in its original size. </h3>
             <table class="table">
 				<thead class="thead-light">
 					<tr>
 						<th scope="col"> Title </th>
 						<th scope="col"> Picture </th>
-						<th scope="col"> Description </th>
-						<th scope="col"> Flairs </th>
+						<!-- <th scope="col"> Description </th>
+						<th scope="col"> Flairs </th> -->
 						{% if loggedIn %}
-							<th> Favorite </th>
+							<th scope="col"> Favorite </th>
 						{% endif %}
 					</tr>
 				<tbody>
                 {% for i in range(titles|count) %}
                     <tr>
                         <td> {{ titles[i] }} </td>
-                        <td> <a href="/list/dog/bigpic" target="_blank"><img src= "{{ pictures[i] }}" /> </a></td>
-                        <td> {{ descriptions[i] }} </td>
-                        <td> {{ flairs[i] }} </td>
+                        <td> <a href="{{pictures[i]}}" target="_blank"><img src= "{{ pictures[i] }}" /> </a></td>
+                        <!-- <td> {{ descriptions[i] }} </td>
+                        <td> {{ flairs[i] }} </td> -->
                         {% if loggedIn %}
                             <td> 
                                 <form action="/favorite" onsubmit="submitThisFavorite(this); return false;" method="POST">
@@ -120,57 +133,24 @@
                     </tr>
                 {% endfor %}
 				</tbody>
-            </table>    
+            </table>
+            <div id="bottom"> </div>
+            <div id="loadMoreButtonGoesHere"></div>   
 		</div>
 
         <br>
 	</body>
 
+    <!-- since the loggedIn script comes before the homey script, the homey script can use that variable -->
     <script>
-        function submitThis(form) {
-            if (window.XMLHttpRequest) {
-                //Firefox, Opera, IE7, and other browsers will use the native object
-                var xhttp = new XMLHttpRequest();
-            } else {
-                //IE 5 and 6 will use the ActiveX control
-                var xhttp = new ActiveXObject("Microsoft.XMLHTTP");
-            }
-            var submitButton = form.querySelector('[type=submit]'); //finds the submit button to disable it so people can't spam the form
-            submitButton.disabled = true;
-            xhttp.onreadystatechange = function() { //handles the response from the submit target
-                //var json = JSON.parse(xhttp.responseText)
-                document.querySelector('#thingGoesHere').innerHTML = xhttp.responseText;
-                submitButton.disabled = false;
-            };
-            xhttp.open(form.method, form.action, true); //sends form to the form action by form method
-            var data = new FormData(form); //gets the form's data
-            xhttp.send(data); //sends the form's data
-        };
-
-        function submitThisFavorite(form) {
-            if (window.XMLHttpRequest) {
-                //Firefox, Opera, IE7, and other browsers will use the native object
-                var xhttp = new XMLHttpRequest();
-            } else {
-                //IE 5 and 6 will use the ActiveX control
-                var xhttp = new ActiveXObject("Microsoft.XMLHTTP");
-            }
-            var submitButton = form.querySelector('[type=submit]'); //finds the submit button to disable it so people can't spam the form
-            submitButton.disabled = true;
-            //the readystatechange fxn is redefined here. when flask returns a new value, this fxn gets triggered.
-            console.log("submitting")
-            xhttp.onreadystatechange = function() { //handles the response from the submit target
-                if (this.readyState === this.DONE) {
-                    var response = xhttp.responseText;
-                    console.log(response)
-                    if (response == "unfavorited") submitButton.value = "Favorite 💕";
-                    if (response == "favorited") submitButton.value = "Unfavorite 💔"
-                    submitButton.disabled = false;
-                }
-            };
-            xhttp.open(form.method, form.action, true); //sends form to the form action by form method
-            var data = new FormData(form); //gets the form's data
-            xhttp.send(data); //sends the form's data
-        };
+        var loggedIn = ("{{ loggedIn }}" == "True") ? true : false;
     </script>
+    <script src="../static/js/homey.js"></script>
+
+
+    <script>
+        var isDogs = ( "{{ category }}" == "dogs")
+    </script>
+    <script src="../static/js/loadmore.js"></script>
+    <script src="../static/js/formsubmit.js"></script>
 </html>

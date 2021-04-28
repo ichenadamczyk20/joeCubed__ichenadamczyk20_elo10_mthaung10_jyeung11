@@ -109,7 +109,7 @@ ericL, jessicaY -- 2021-04-26 20:00
  - howto_javascript-XMLHttpRequest.md
  - 411_on_MediaWikiAPI.md
 
-  ericL -- 2021-04-27 20:20
+ ericL -- 2021-04-27 20:20
  - tested ian's favoriting
  - fixed bug with profile relating to confusing itemID with faveID
  - added db method getItemIDByFaveID
@@ -122,7 +122,32 @@ ericL, jessicaY -- 2021-04-26 20:00
  - made favoriting work
 
  michelleT -- 2021-04-27 22:30
-- styled navbar, resized tables to make images fit better, styled login/register pages
+ - styled navbar, resized tables to make images fit better, styled login/register pages
 
-jessicaY -- 2021-04-27 22:30
-- random image generator for tropical api
+ jessicaY -- 2021-04-27 22:30
+ - random image generator for tropical api
+
+ __________________________________________________
+
+ ericL -- 2021-04-28 15:30
+ - hid the description and flair columns from generic_list.html(we aren't going to get to implement those features)
+ - added a load more dogs button for dogs, using loadmore.js
+ - replaced internal javascript in generic_list.html and home.html with formsubmit.js
+ - modified homey.js and home.html to put the login and logout buttons in the top bar
+ - moved the profile button to the top bar and made it only show up if logged in
+ - added top bar to generic_list.html, removed the back to home button that was redundant
+ - integrated the old top bar in generic_list into the new top bar, now both of them are stacked sticky
+
+ jessicaY, michelleT -- 2021-04-28 15:47
+ - clicking on image now opens it up in new tab in its original size
+
+ ianC -- 2021-04-28 17:30
+ - "Finished" "implementation" of MediaWiki API "image search"
+ - Updated design doc slightly (+random.html)
+ - Fixed bug with login/logout button on top right of generic_list.html
+
+ michelleT -- 2021-04-28 17:45
+ - finished with color/buttons/styling/other placements on profile, login, register, home templates 
+
+ jessicaY -- 2021-04-28 17:47
+ - small styling and finishing touches (bottom of page buttons, text changes, etc.)

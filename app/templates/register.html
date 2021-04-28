@@ -18,8 +18,22 @@
         <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
     </head>
 
-    <body>
-		<div class="grid-container fluid">	
+    <body style="background-color: #f5d7fa;">
+		<nav class="navbar navbar-light sticky-top navbar-expand-lg" style="background-color: #e3f2fd;">
+			<div class="navbar-brand" href="#">Ample Examples</div>
+			<button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
+				<span class="navbar-toggler-icon"></span>
+			</button>
+			<div class="collapse navbar-collapse" id="navbarNavAltMarkup">
+				<div class="navbar-nav">
+				<a class="nav-item nav-link active" href="/">Home <span class="sr-only">(current)</span></a>
+				<a class="nav-item nav-link" href="/list/dogs">See Dogs</a>
+                <a class="nav-item nav-link" href="/list/fruits">See Tropical Fruits and Vegetables</a>
+				</div>
+			</div>
+		</nav>         
+
+		<div class="main-form">	
 			<div class="translucent-form-overlay"> 
 				{% if error_msg is defined %}
 					<p class="error-msg">{{ error_msg }}</p>
@@ -28,17 +42,29 @@
 					<p class="success-msg">{{ success_msg }}</p>
 				{% endif %}
 				<form action="/register-submit" method="POST">
-					<label for="username" required>Username <span style="color:#d4332a">*</label>
-					<input type="text" name="username" id="username" required />
+					<div class="form-group">
+						<div class="row columns">
+							<label style="margin-left: 15px;" for="username" required>Username <span style="color:#d4332a">*</label>
+							<input type="text" name="username" id="username" required />
+						</div>
+					</div>
 
-					<label for="password" required>Password <span style="color:#d4332a">*</label>
-					<input type="password" name="password" id="password" required />
+					<div class="form-group">
+						<div class="row columns">
+							<label style="margin-left: 15px" for="password" required>Password <span style="color:#d4332a">*</label>
+							<input type="password" name="password" id="password" required />
+						</div>
+					</div>
 
-					<label for="password" required>Password confirmation <span style="color:#d4332a">*</label>
-					<input type="password" name="passwordConf" id="passwordConf" required />
+					<div class="form-group">
+						<div class="row columns">
+							<label style="margin-left: 15px;" for="password" required>Password confirmation <span style="color:#d4332a">*</label>
+							<input type="password" name="passwordConf" id="passwordConf" required />
+						</div>
+					</div>
 					
-					<button type="submit" class="btn btn-primary">Register</button>
-					<p>Already registered? <a href="/login">Log in here.</a></p>
+					<button style="margin: -10px 0 5px 0;" type="submit" class="btn btn-primary">Register</button>
+					<p>Already registered? Log in<a href="/login"> here.</a></p>
 				</form>
 			</div>
 		</div>

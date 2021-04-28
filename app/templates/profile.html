@@ -18,26 +18,51 @@
 				
 	</head>
 
-	<body>
-        <h1>Your list of favorites, kind user:</h1>
+	<body style="background-color: #f5d7fa;">
+		<nav class="sticky-top">
+            <nav class="navbar navbar-light navbar-expand-lg" style="background-color: #e3f2fd;">
+                <div class="navbar-brand" href="#">Ample Examples</div>
+                <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
+                    <div class="navbar-nav">
+                    <a class="nav-item nav-link active" href="/">Home <span class="sr-only">(current)</span></a>
+                    <a class="nav-item nav-link" href="/list/dogs">See Dogs</a>
+                    <a class="nav-item nav-link" href="/list/fruits">See Tropical Fruits and Vegetables</a>
+                    
+                    <!-- This nav block is where the logout and login buttons currently go -->
+
+                    <div id="profile"></div>
+                    <a class="nav-item nav-link" id="logout"></a>
+                    <a class="nav-item nav-link" id="login"></a>
+
+                    </div>
+                </div>
+            </nav>
+		
+        <h1 style="padding-left: 2%; padding-top: 2%">Your list of favorites, kind user:</1>
+        <h2 style="padding-left: 2%; padding-top: 2%">You can click on an image to open it in a new tab in its original size.</h2>
         <div id = "List">
-            <table>
-                <tr>
-                    <th> Title </th>
-                    <th> Picture </th>
-                    <th> Description </th>
-                    <th> Flairs </th>
-                    {% if loggedIn %}
-                        <th> Favorite </th>
+           <table class="table">
+				<thead class="thead-light">
+                    <th scope="col"> Title </th>
+                    <th scope="col"> Picture </th>
+                   <!-- <th scope="col"> Description </th>
+                    <th scope="col"> Flairs </th-->
+                   
+                     {% if loggedIn %}
+                        <th scope="col"> Favorite </th>
                     {% endif %}
                 </tr>
                 {% for i in range(titles|count) %}
                     <tr>
                         <td> {{ titles[i] }} </td>
-                        <td> <img src= "{{ pictures[i] }}"/> </td>
-                        <td> {{ descriptions[i] }} </td>
-                        <td> {{ flairs[i] }} </td>
-                        {% if loggedIn %}
+                        <td><a href="{{pictures[i]}}" target="_blank"> <img src= "{{ pictures[i] }}"/></a> </td>
+                       <!-- <td> {{ descriptions[i] }} </td>
+                        <td> {{ flairs[i] }} </td-->
+                       
+                         {% if loggedIn %}
                             <td> 
                                 <form action="/favorite" onsubmit="submitThisFavorite(this); return false;" method="POST">
                                     <input type="hidden" name="itemID" value="{{ itemids[i] }}" />
@@ -49,14 +74,6 @@
                 {% endfor %}
             </table>
 
-        </div>
-
-        <br>
-
-        <div id = "Nav">
-            <form action="/" method="POST">
-                <input type="submit" name="backHome" value="Back to Home">
-            </form>
         </div>
 	</body>
 

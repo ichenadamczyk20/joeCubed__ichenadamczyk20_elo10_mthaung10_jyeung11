@@ -167,7 +167,7 @@ def list(category):
     #pass the mini db to the list page
     return render_template("generic_list.html", titles=titles, pictures=pictures, \
         descriptions=descriptions, flairs=flairs, listids=listids, itemids=itemids, category=category, \
-        favorited=itemidsoffavoritedids, loggedIn=("username" in session))
+        favorited=itemidsoffavoritedids, loggedIn="username" in session)
 
 
 #profile route loads the profile page
@@ -193,11 +193,26 @@ def profile():
     return render_template("profile.html", titles=titles, pictures=pictures, descriptions=descriptions, \
             flairs=flairs, listids=listids, itemids=itemids)
 
-
-@app.route("/dog", methods=["GET", "POST"])
-def dogsite():
-    return render_template("dog.html")
-
+#1. javascript sends a request to /favorite and waits for what is returned
+#2. flask favorites/unfavorites and returns "unfavorited" or "favorited"
+#3. javascript takes the returned "unfavorited" or "favorited"
+@app.route("/favorite", methods=["POST"])
+def favorite():
+    itemID = int(request.form["itemID"])
+    print(itemID)
+    userID = session["userid"]
+    print(userID)
+    faveID = db.getFaveID(userID, itemID)
+    print(faveID)
+    if faveID != None:
+        print("unfavoriting")
+        db.deleteFavoritedItem(faveID)
+        return "unfavorited"
+    else: #if favorited is False or None
+        print("favoriting")
+        db.addFavoritedItem(session["userid"], request.form["listID"], itemID)
+        return "favorited"
+    db.showFavorited()
 
 #API STUFF START
 #https://dog.ceo/dog-api/
@@ -245,6 +260,33 @@ def getRandomBreed():
 
     return render_template("random.html", images = list, message = message, breedQuery1 = " of the ", dogBreed=dogBreed.capitalize(), breedQuery2=" breed!", errorMsg=errorMsg)
 
+@app.route("/loadMoreDogs", methods=["GET", "POST"])
+def loadMoreDogs():
+    for x in range (0,10):#get an image <number> amount of times
+        conn = http.client.HTTPSConnection("dog.ceo")
+        conn.request('GET', '/api/breeds/image/random')
+        response = conn.getresponse()
+        dict = json.loads(response.read())
+        picture=dict['message']#get image source
+
+        
+        #"https://images.dog.ceo/breeds/collie-border/n02106166_4450.jpg"
+        
+        title = picture[30:]
+        index = title.rindex("/")
+        title = title[:index]
+        title = title.replace("-", " ")
+
+    # print(title)
+    # print(picture)
+    
+        if db.getItemInfoByPicture(picture) == None:
+            db.addItem(title, picture, "description", "flair", "dogs")
+    return redirect("/list/dogs")
+#====================================================================================
+
+
+
 @app.route("/wikiImages", methods=["GET", "POST"])
 def wikiImages():
     queries = request.form['queries'].rstrip(",").split(',') 
@@ -255,7 +297,7 @@ def wikiImages():
     for query in queries:
         S = requests.Session()
 
-        URL = "https://en.wikipedia.org/w/api.php"
+        URL = "https://commons.wikimedia.org/w/api.php"
 
         SEARCHPAGE = query
 
@@ -268,17 +310,30 @@ def wikiImages():
 
         R = S.get(url=URL, params=PARAMS)
         DATA = R.json()
-
-        print(DATA['query']['search'][0])
-        url = "https://en.wikipedia.org/w/api.php?action=parse&pageid=" + str(DATA['query']['search'][0]['pageid']) + "&prop=text&format=json"
-        conn = http.client.HTTPSConnection("wikipedia.org")
+        thingsa = random.choice(DATA['query']['search'])
+        url = "https://commons.wikimedia.org/w/api.php?action=parse&pageid=" + str(thingsa['pageid']) + "&prop=text&format=json"
+        conn = http.client.HTTPSConnection("wikimedia.org")
         conn.request('GET', url)
-        response = conn.getresponse()
-        print(response)
-        src = response.read().decode().split('img')[1].split('src=\\"')[1].split('\\"')[0]
+        response = conn.getresponse().read().decode("ISO-8859-1")
+        #src = "https://commons.wikimedia.org" + response.split('<img')[0].split('<a')[-1].split('href=\\"')[1].split('\\" ')[0]
+        src = []
+        for j in response.split('<img')[1:]:
+            try:
+                width = int(j.split('width=\\"')[1].split('\\"')[0])
+                height = int(j.split('height=\\"')[1].split('\\"')[0])
+                if width > 67 and height > 67 and src != 'https://upload.wikimedia.org/wikipedia/commons/thumb/4/41/Noimage.svg/173px-Noimage.svg.png':
+                    src += ["https://" + j.split('>')[0].split('https://')[-1].split(' ')[0]]
+            except:
+                pass
+        print(src)
+        if (src == []):
+            return "http://s3.amazonaws.com/pix.iemoji.com/images/emoji/apple/ios-12/256/pensive-face.png!!!try again"
+        src = random.choice(src)
+        if src.endswith('\\"'):
+            src = src[:-2]
         imageSrcs[i] = src
         i += 1
-    return imageSrcs[0]
+        return imageSrcs[0] + "!!!" + thingsa['title']
 
 @app.route("/randomTropical", methods=["GET", "POST"])
 def randomTropical():
@@ -286,8 +341,8 @@ def randomTropical():
     number = int(request.form["numTropical"]) #requested number of images
     list = [None] * number #initialize list
     for x in range(0, number):
-        integer = random.randint(0, 101)
-        quest = food[integer]
+        integer = random.randint(0, 100)
+        quest = food[integer].replace(" ", "%20")
         link = "http://api.tropicalfruitandveg.com/tfvjsonapi.php?tfvitem=" + quest.lower()
         u = urllib.request.urlopen(link)
         response = json.loads(u.read().decode("ISO-8859-1"))
@@ -301,26 +356,6 @@ def randomTropical():
 
 #API STUFF END
 
-#1. javascript sends a request to /favorite and waits for what is returned
-#2. flask favorites/unfavorites and returns "unfavorited" or "favorited"
-#3. javascript takes the returned "unfavorited" or "favorited"
-@app.route("/favorite", methods=["POST"])
-def favorite():
-    itemID = int(request.form["itemID"])
-    print(itemID)
-    userID = session["userid"]
-    print(userID)
-    faveID = db.getFaveID(userID, itemID)
-    print(faveID)
-    if faveID != None:
-        print("unfavoriting")
-        db.deleteFavoritedItem(faveID)
-        return "unfavorited"
-    else: #if favorited is False or None
-        print("favoriting")
-        db.addFavoritedItem(session["userid"], request.form["listID"], itemID)
-        return "favorited"
-    db.showFavorited()
 
 if __name__ == "__main__":
     app.debug = True
