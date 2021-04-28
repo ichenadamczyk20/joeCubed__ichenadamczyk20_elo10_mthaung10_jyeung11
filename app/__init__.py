@@ -325,7 +325,6 @@ def wikiImages():
                     src += ["https://" + j.split('>')[0].split('https://')[-1].split(' ')[0]]
             except:
                 pass
-        print(src)
         if (src == []):
             return "http://s3.amazonaws.com/pix.iemoji.com/images/emoji/apple/ios-12/256/pensive-face.png!!!try again"
         src = random.choice(src)
