@@ -1,7 +1,11 @@
-<h1> {{message}} {{breedQuery}} </h1>
+<h1> {{message}} {{breedQuery1}} {{dogBreed}} {{breedQuery2}} </h1>
 <div id = "Images">
-    {% for n in images %}
-        <img src = "{{n}}" style="width: 15%; flex: 33.33%; padding: 5px;"><!--loops through list of img srcs and loads each one-->
-    {% endfor %}
+    {% if errorMsg == True %}
+        <h2> Your dog breed does not exist or is not supported! </h2>
+    {% else %}
+        {% for n in images %} 
+                <img src = "{{n}}" style="width: 15%; flex: 33.33%; padding: 5px;"/><!--loops through list of img srcs and loads each one-->
+        {% endfor %}
+    {% endif %}
 </div>
 

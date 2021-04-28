@@ -102,5 +102,27 @@ ericL, jessicaY -- 2021-04-26 20:00
  - added fruits list to generic_list
 
  jessicaY -- 2021-04-27 10:36
- - added stuff so user can request images of multiple items/ideas/things from wiki api
+ - added stuff so user can request images of multiple items/ideas/things from wiki api (using Ian's code to pull from wiki)
  - added get method to @app.route("/list/<category>") so that navigation links work
+
+ ianC -- 2021-04-27 19:00
+ - howto_javascript-XMLHttpRequest.md
+ - 411_on_MediaWikiAPI.md
+
+  ericL -- 2021-04-27 20:20
+ - tested ian's favoriting
+ - fixed bug with profile relating to confusing itemID with faveID
+ - added db method getItemIDByFaveID
+
+ jessicaY -- 2021-04-27 20:41
+ - entering a non valid dog breed returns a proper return message instead of loading invalid images
+
+ ericL, ianC -- 2021-04-27 22:00
+ - losing our minds over favoriting, created getFaveID
+ - made favoriting work
+
+ michelleT -- 2021-04-27 22:30
+- styled navbar, resized tables to make images fit better, styled login/register pages
+
+jessicaY -- 2021-04-27 22:30
+- random image generator for tropical api

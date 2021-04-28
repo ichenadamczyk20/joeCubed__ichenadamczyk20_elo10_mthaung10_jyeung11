@@ -21,8 +21,8 @@ app = Flask(__name__)
 def form():
     return render_template('form.html')
 
-@app.route('/form-submit')
-def handleFormSubmission(json):
+@app.route('/form-submit', methods=['POST'])
+def handleFormSubmission():
     if "input-data" in request.form:
         return "successfully received input: " + request.form["input-data"]
     else:
@@ -31,7 +31,7 @@ def handleFormSubmission(json):
 if __name__ == '__main__':
     app.run()
 ```
-2. Set up the HTML form. It will be set up almost exactly like how you would set up a normal HTML form, but also with the `onsubmit="..."` part. When the submit button is pressed, the JavaScript code in `onsubmit` will be executed. First, it calls the JavaScript function `submitThis`, sending the DOM object for that HTML form to `submitThis`. Then, `return false` is executed, telling the HTML form not to do the default action it would do when submitted, which is to submit the form and redirect the browser to the URL in `action`.
+2. Set up the HTML form in the template. It will be set up almost exactly like how you would set up a normal HTML form, but also with the `onsubmit="..."` part. When the submit button is pressed, the JavaScript code in `onsubmit` will be executed. First, it calls the JavaScript function `submitThis`, sending the DOM object for that HTML form to `submitThis`. Then, `return false` is executed, telling the HTML form not to do the default action it would do when submitted, which is to submit the form and redirect the browser to the URL in `action`.
 ```
 <form action="/form-submit" onsubmit="submitThis(this); return false;" method="POST">
     <input type="text" name="input-data" value="this is the input data sent" required>
@@ -46,21 +46,26 @@ if __name__ == '__main__':
         var xhttp = new XMLHttpRequest();
 
         xhttp.onreadystatechange = function() {
-            //this function is called when the response is received from the form's endpoint
-            responseText = xhttp.responseText; //handle this variable however you like
-            //if you want to treat as JSON data, you can use this line
-            //var json = JSON.parse(xhttp.responseText)
-            console.log("Response received: " + responseText);
+            //this function is called when a response is received from the form's endpoint
+            if (this.readyState === this.DONE) {
+                //this code block executes when the response data is finished loading
+                var responseText = xhttp.responseText; //handle this variable however you like
+                //if you want to treat as JSON data, you can use this line
+                //var json = JSON.parse(xhttp.responseText)
+                alert("Response received: " + responseText);
+            }
         };
 
         //opens a request to send the data to the URL form.action via form.method
         //note the false at the end of the xhttp.open call
         //if set to true, no javascript code will be run after the form is submitted, until the reponse from the form is returned
         //if set to false, other javascript code will run while the xhttp object waits for the response
-        xhttp.open(form.method, form.action, false); 
+        xhttp.open(formElement.method, formElement.action, false); 
         
-        var data = new FormData(form); //gets the form's data as a FormData object
-        xhttp.send(data); //sends the FormData object with the same encoding as an HTML form element would send its data
+        var data = new FormData(formElement); //gets the form's data as a FormData object
+        xhttp.send(data); //sends the FormData object
+        //because a FormData object is being sent, it will automatically send with the same encoding as an HTML form element would send its data
+        return false;
     }
 </script>
 ```
@@ -74,6 +79,7 @@ if (window.XMLHttpRequest) {
     var xhttp = new ActiveXObject("Microsoft.XMLHTTP");
 }
 ```
+Also note that if you return a redirect with Flask, XMLHttpRequest won't handle the redirect and the user will be redirected anyway. (Also, if you're curious about the functionality of JavaScript for sending requests, you might also be interested in looking into FetchAPI.)
 
 
 ### Resources

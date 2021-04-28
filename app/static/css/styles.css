@@ -5,7 +5,7 @@
 }
 
 .translucent-form-overlay {
-  max-width: 500px;
+  max-width: 300px;
   width: 100%; 
   background-color: rgba(54, 54, 54, 0.8);
   padding: 20px;
@@ -41,5 +41,26 @@
 }
 
 .navbar a:hover {
-	text-decoration: underline;
+	text-decoration: none;
+}
+
+/* Table for Dog and Fruits/Vegetables Pages */
+
+img {
+	max-height: 250px;
+	max-width: 300px;
+	margin: 0 auto;
+}
+
+table tr {
+	padding: 5px;
+}
+
+table thead tr th:nth-child(1) {
+	width: 300px;
+}
+
+table tbody tr {
+	max-height: 300px;
+	max-width: 350px;
 }

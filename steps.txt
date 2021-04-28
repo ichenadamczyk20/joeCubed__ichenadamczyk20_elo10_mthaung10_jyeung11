@@ -5,8 +5,6 @@
     - shows the possible lists and allows you favorite it
  - Build profile.html
     - shows the favorited lists and entries for the user
- - Build error.html
-    - shows an error for 400, 404, 405, stuff
  - Put the api code into nice handy functions
  - Code api code for the other two apis: edamam, trefle
  - Build flask functionality for sending lists to home.html
@@ -15,14 +13,47 @@
  - Adding caching to db
  - Style the stuff
  - Flair searching?
- - Add password hashing
- - Add wikimedia api to kb
- - Add xhttprequest documentation to https://github.com/stuy-softdev/notes-and-code20-21/tree/master/how-to
 
 
 
- to merge /dog into one page:
 
- JSONize /getRandomDog /getRandomDogBreed
- JSize /dog
- 
+
+SECOND HALF LOOK HERE
+ANYTHING MISSING?
+JM - Finish styling with bootstrap
+ALL - Update design doc one last time
+JM - Code our own quota limits
+    EI - Customize error.html
+
+ALL - Fix code
+ALL - Please
+ALL - It doesn't look good
+ALL - make flag
+
+delete dog.html
+delete blah.py
+delete tester.html
+delete wiki.html
+delete secondapp/
+delete 411_on_MediaWikiAPI
+delete howto_javascript-XML
+delete steps.txt
+
+
+
+delete joeCubed repo
+delete me from existence
+delete stuy repo
+
+click on image to open original size in new tab
+ask eric to increase size of lists (screw loading upon clicking a load more button LOL)
+styling LOL
+change placement of login/register/logout/profile buttons
+
+
+
+
+
+
+IAN'S PURGATORY LOL
+NO - Port Wikipedia to Wikimedia <- NOT THIS

@@ -120,9 +120,21 @@ def getAllItemsOf(listid: str) -> tuple:
         return None
     return entries
 
+def getItemIDByFaveID(faveid: int) -> int:
+    return getFavoritedInfo(faveid)[2]
+
 #================================================================================
 # FAVORITED RELATED METHODS
 #================================================================================
+
+#gets the faveid of the unique entry in favorited that belongs to a given user
+#returns none if no such entry exists
+def getFaveID(userid: int, itemid: int) -> int:
+    command = 'SELECT id FROM favorited WHERE userid=? AND itemid=?;'
+    info = None
+    for row in c.execute(command, [userid, itemid]):
+        info = row[0]
+    return info
 
 #retrieves all the info of a favorited item from a given user id.
 #returns a tuple in the form of (userid, listid, itemid)
@@ -144,7 +156,7 @@ def getAllFavoritedItemsOf(userid: int) -> tuple:
     command = 'SELECT id FROM favorited WHERE userid=?;'
     entries = ()
     for row in c.execute(command, [userid]):
-        entries += row[0]
+        entries += (row[0],)
     if entries == ():
         return None
     return entries
@@ -154,6 +166,7 @@ def getAllFavoritedItemsOf(userid: int) -> tuple:
 def addFavoritedItem(userid: int, listid: str, itemid: int):
     command = 'INSERT INTO favorited VALUES (?, ?, ?, NULL);'
     c.execute(command, [userid, listid, itemid])
+    print(command, [userid, listid, itemid])
     db.commit()
 
 

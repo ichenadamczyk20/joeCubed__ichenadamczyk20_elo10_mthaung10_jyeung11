@@ -4,41 +4,21 @@
     <head>
         <link rel="stylesheet" href="/static/css/styles.css">
 
-        <!-- Compressed CSS 
-        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/foundation-sites@6.6.3/dist/css/foundation.min.css" integrity="sha256-ogmFxjqiTMnZhxCqVmcqTvjfe1Y/ec4WaRj/aQPvn+I="
-        crossorigin="anonymous">
-
-			Compressed JavaScript 
-        <script src="https://cdn.jsdelivr.net/npm/foundation-sites@6.6.3/dist/js/foundation.min.js" integrity="sha256-pRF3zifJRA9jXGv++b06qwtSqX1byFQOLjqa2PTEb2o="
-        crossorigin="anonymous">
-
-        </script> -->
-		
-		<!-- BOOTSTRAP -->
-
-		<!-- Required meta tags -->
+		<!-- Bootstrap Required meta tags -->
 		<meta charset="utf-8">
 		<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
 		<!-- Bootstrap CSS -->
 		<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+
+        <!-- Bootstrap JS -->
+        <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
+        <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
     </head>
 
     <body>
-        <a href="/profile">Profile page</a>
-        <form action="/list/dogs" method="POST">
-            <input name="toDogPage" type="submit" value="See Dogs"/>
-        </form>
-        <form action="/list/fruits" method="POST">
-            <input name="toFruitPage" type="submit" value="See Fruits"/>
-        </form>
-        
-        <!-- This nav block is where the logout and login buttons currently go -->
-        <nav id="nav">
-            
-        </nav>
-
-		<nav class="navbar sticky-top navbar-expand-lg navbar-light bg-light">
+		<nav class="navbar navbar-light sticky-top navbar-expand-lg" style="background-color: #e3f2fd;">
 			<a class="navbar-brand" href="#">Ample Examples</a>
 			<button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
 				<span class="navbar-toggler-icon"></span>
@@ -48,12 +28,16 @@
 				<a class="nav-item nav-link active" href="#">Home <span class="sr-only">(current)</span></a>
 				<a class="nav-item nav-link" href="/list/dogs">See Dogs</a>
                 <a class="nav-item nav-link" href="/list/fruits">See Tropical Fruits and Vegetables</a>
-				<a class="nav-item nav-link" href="/login">Login</a>
-				<a class="nav-item nav-link" href="/register">Register</a>
 				</div>
 			</div>
-		</nav>
+		</nav> 
 
+        <a href="/profile">Profile page</a>
+        
+        <!-- This nav block is where the logout and login buttons currently go -->
+        <nav id="nav">
+            
+        </nav>
 
 
         <!-- since the loggedIn script comes before the homey script, the homey script can use that variable -->
@@ -63,13 +47,36 @@
         <script src="./static/js/homey.js"></script>
 
         <!--Load images from wiki api on home page-->
-        <form action="/wikiImages" method="POST">
-            <p>Search for images of things. Each thing should be separated by a comma. If a thing exists as a wikipedia page, you will have an image for it returned.</p>
+        <form action="/wikiImages" onsubmit="submitThisWiki(this); return false;" method="POST">
+            <p>Search for images of things. Not limited to physical objects. <br> Each thing should be separated by a comma. <br> If the thing exists as a wikipedia page, you will have an image for it returned.</p>
             <p>Some examples: <br>pie, a, dream, apple pie, pi<br>wolf, fat, car, tar, water<br>gudetama, anime, science, death, bug</p> 
-            <p>Notes: <br> 1) This may also return gifs. <br> 2) Each query will always return the same image or gif. <br> 3) Have fun with it!</p>
+            <p>Notes: <br> 1) This may also return gifs. <br> 2) Each query will always return the same image or gif. <br> 3) Have fun with it! <br> 4) You may get something completely unrelated, but most of the time this won't be the case LOL. </p>
             <input type="text" name="queries" id="queries" placeholder="Your Queries" size = "10" required/>
             <input type="submit" name="wikiImages" value="Load images"/>
         </form>
+        <img src="" id="wikiImage" />
+
+        <script>
+            function submitThisWiki(form) {
+                if (window.XMLHttpRequest) {
+                    //Firefox, Opera, IE7, and other browsers will use the native object
+                    var xhttp = new XMLHttpRequest();
+                } else {
+                    //IE 5 and 6 will use the ActiveX control
+                    var xhttp = new ActiveXObject("Microsoft.XMLHTTP");
+                }
+                var submitButton = form.querySelector('[type=submit]'); //finds the submit button to disable it so people can't spam the form
+                submitButton.disabled = true;
+                xhttp.onreadystatechange = function() { //handles the response from the submit target
+                    //var json = JSON.parse(xhttp.responseText)
+                    document.querySelector('#wikiImage').src = xhttp.responseText;
+                    submitButton.disabled = false;
+                };
+                xhttp.open(form.method, form.action, true); //sends form to the form action by form method
+                var data = new FormData(form); //gets the form's data
+                xhttp.send(data); //sends the form's data
+            };
+        </script>
 
 	</body>
 

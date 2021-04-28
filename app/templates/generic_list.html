@@ -3,14 +3,19 @@
 	<head>
 		<link rel="stylesheet" href="/static/css/styles.css" />
         <title>List of {{ category }} - Ample Examples</title>
-		<!-- Compressed CSS
-		<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/foundation-sites@6.6.3/dist/css/foundation.min.css" integrity="sha256-ogmFxjqiTMnZhxCqVmcqTvjfe1Y/ec4WaRj/aQPvn+I=" crossorigin="anonymous">
-        -->
+		
+		<!-- Bootstrap Required meta tags -->
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
-		<!-- Compressed JavaScript -->
-		<script src="https://cdn.jsdelivr.net/npm/foundation-sites@6.6.3/dist/js/foundation.min.js" integrity="sha256-pRF3zifJRA9jXGv++b06qwtSqX1byFQOLjqa2PTEb2o="
-		 crossorigin="anonymous">
-		</script>
+		<!-- Bootstrap CSS -->
+		<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+
+        <!-- Bootstrap JS -->
+        <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
+        <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
+				
 		<style>
 			.column {
 				flex: 33.33%;
@@ -30,7 +35,7 @@
 		<div id="navbar">
 			<a class="navs" href="#RNG">Random Image Generators</a>
 			<a class="navs" href="#List">List of {{ category }}</a>
-			<a class="navs" href="#Nav">Navigation</a>
+			<a class="navs" href="/">Back to Home</a>
 		</div>
 
         <br><br>
@@ -38,18 +43,29 @@
 		<div id="RNG">
 			<h1> Random image generators: </h1>
             <h3> Note that requesting more images means a longer loading time. </h3>
-			<form action="/randomDog" onsubmit="submitThis(this); return false;" method="POST">
-				How many images do you want?
-				<input type ="number" id = "numDogs" name = "numDogs" min="1" max="99" required>
-                <input name="randomDoggy" type="submit" value="Load random {{ category }} images."/>
-            </form>
-            <br>
-            <form action="/randomBreed" onsubmit="submitThis(this); return false;" method="POST">
-                How many images do you want?
-                <input type ="number" id = "numDogs" name = "numDogs" min="1" max="99" required>
-                <input type="text" name="breed" id="breed" placeholder="Dog Breed" size = "10" required/>
-                <input name="randomDogBreed" type = "submit" value="Load random images of this {{ category }} {{ category.type }}."/>
-            </form>
+            <h4> The limit is set to 25. </h4>
+            {% if category == "dogs" %}
+                <!--DOG STUFF-->
+                <form action="/randomDog" onsubmit="submitThis(this); return false;" method="POST">
+                    How many images do you want?
+                    <input type ="number" id = "numDogs" name = "numDogs" min="1" max="25" required/>
+                    <input name="randomDoggy" type="submit" value="Load random dog images."/>
+                </form>
+                <br>
+                <form action="/randomBreed" onsubmit="submitThis(this); return false;" method="POST">
+                    How many images do you want?
+                    <input type ="number" id = "numDogs" name = "numDogs" min="1" max="25" required/>
+                    <input type="text" name="breed" id="breed" placeholder="Dog Breed" size = "10" required/>
+                    <input name="randomDogBreed" type = "submit" value="Load random images of this dog breed."/>
+                </form>
+            {% else %}
+                <!-- TROPICAL STUFF -->
+                <form action="/randomTropical" onsubmit="submitThis(this); return false;" method="POST">
+                    How many images do you want?
+                    <input type = "number" id="numTropical" name="numTropical" min="1" max="25" required>
+                    <input name = "randomTropical" type="submit" value = "Load random images of tropical fruits/vegetables"/>
+                </form>
+            {% endif %}
         </div>
         <!--  -->
 
@@ -68,20 +84,22 @@
                 <br>
                 <img src = "https://images.dog.ceo/breeds/bulldog-french/n02108915_618.jpg"> This is a picture of a French Bulldog.
             </column> -->
-            <table>
-                <tr>
-                    <th> Title </th>
-                    <th> Picture </th>
-                    <th> Description </th>
-                    <th> Flairs </th>
-                    {% if loggedIn %}
-                        <th> Favorite </th>
-                    {% endif %}
-                </tr>
+            <table class="table">
+				<thead class="thead-light">
+					<tr>
+						<th scope="col"> Title </th>
+						<th scope="col"> Picture </th>
+						<th scope="col"> Description </th>
+						<th scope="col"> Flairs </th>
+						{% if loggedIn %}
+							<th> Favorite </th>
+						{% endif %}
+					</tr>
+				<tbody>
                 {% for i in range(titles|count) %}
                     <tr>
                         <td> {{ titles[i] }} </td>
-                        <td> <img src= "{{ pictures[i] }}"/> </td>
+                        <td> <a href="/list/dog/bigpic" target="_blank"><img src= "{{ pictures[i] }}" /> </a></td>
                         <td> {{ descriptions[i] }} </td>
                         <td> {{ flairs[i] }} </td>
                         {% if loggedIn %}
@@ -90,28 +108,22 @@
                                     <input type="hidden" name="itemID" value="{{ itemids[i] }}" />
                                     <input type="hidden" name="listID" value="{{ category }}" />
                                     <input type="submit" name="submit"
-                                        {% if favorites[i] %}
+                                        {% if itemids[i] in favorited %}
                                             value="Unfavorite 💔"
                                         {% else %}
                                             value="Favorite 💕"
                                         {% endif %}
                                     />
                                 </form>
-                            </td>
+                            <td>
                         {% endif %}
                     </tr>
                 {% endfor %}
-            </table>
-
-        </div>
+				</tbody>
+            </table>    
+		</div>
 
         <br>
-
-        <div id = "Nav">
-            <form action="/" method="POST">
-                <input type="submit" name="backHome" value="Back to Home">
-            </form>
-        </div>
 	</body>
 
     <script>
@@ -133,8 +145,7 @@
             xhttp.open(form.method, form.action, true); //sends form to the form action by form method
             var data = new FormData(form); //gets the form's data
             xhttp.send(data); //sends the form's data
-            return false;
-        }
+        };
 
         function submitThisFavorite(form) {
             if (window.XMLHttpRequest) {
@@ -146,17 +157,20 @@
             }
             var submitButton = form.querySelector('[type=submit]'); //finds the submit button to disable it so people can't spam the form
             submitButton.disabled = true;
+            //the readystatechange fxn is redefined here. when flask returns a new value, this fxn gets triggered.
+            console.log("submitting")
             xhttp.onreadystatechange = function() { //handles the response from the submit target
-                var json = JSON.parse(xhttp.responseText);
-                if (json.responseText["error"]) alert(json.responseText["error"]);
-                if (json.responseText["success"])
-                    submitButton = (submitButton == "Favorite 💕") ? "Unfavorite 💔" : "Favorite 💕";
-                submitButton.disabled = false;
+                if (this.readyState === this.DONE) {
+                    var response = xhttp.responseText;
+                    console.log(response)
+                    if (response == "unfavorited") submitButton.value = "Favorite 💕";
+                    if (response == "favorited") submitButton.value = "Unfavorite 💔"
+                    submitButton.disabled = false;
+                }
             };
             xhttp.open(form.method, form.action, true); //sends form to the form action by form method
             var data = new FormData(form); //gets the form's data
             xhttp.send(data); //sends the form's data
-            return false;
-        }
+        };
     </script>
 </html>

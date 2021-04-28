@@ -18,7 +18,7 @@ def createTables():
 
     command += "DROP TABLE IF EXISTS favorited;"
 
-    command += "DROP TABLE IF EXISTS listn;"
+    command += "DROP TABLE IF EXISTS lists;"
     
     command += "CREATE TABLE users(username TEXT, password TEXT, id INTEGER PRIMARY KEY AUTOINCREMENT);"
 
@@ -29,6 +29,8 @@ def createTables():
     c.executescript(command)
     db.commit()
 
+if __name__ == "__main__":
+    createTables()
 
 #initialize the list db with fruit stuff 
 #===========================================================
@@ -51,7 +53,7 @@ for x in range (0, 101):
 #initialize the list db with dog stuff 
 #===========================================================
 #https://dog.ceo/dog-api/
-for x in range (0,5):#get an image <number> amount of times
+for x in range (0,50):#get an image <number> amount of times
     conn = http.client.HTTPSConnection("dog.ceo")
     conn.request('GET', '/api/breeds/image/random')
     response = conn.getresponse()
@@ -73,7 +75,5 @@ for x in range (0,5):#get an image <number> amount of times
         dbmanager.addItem(title, picture, "description", "flair", "dogs")
 #===========================================================
 
-#dbmanager.showLists() #testing
+dbmanager.showLists() #testing
 
-if __name__ == "__main__":
-    createTables()
