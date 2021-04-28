@@ -43,8 +43,8 @@ for x in range (0, 101):
     link = "http://api.tropicalfruitandveg.com/tfvjsonapi.php?tfvitem=" + quest.lower()
     u = urllib.request.urlopen(link)
     response = json.loads(u.read().decode("ISO-8859-1"))
-    print (response['results'][0]['tfvname']) #name of fruit/vegetable
-    print (response['results'][0]['imageurl'])
+    #print (response['results'][0]['tfvname']) #name of fruit/vegetable
+    #print (response['results'][0]['imageurl'])
     dbmanager.addItem(response['results'][0]['tfvname'], response['results'][0]['imageurl'], "description", "flair", "fruits")
     #additional variables: description, uses, propagation, health, soil, climate
 
@@ -75,5 +75,5 @@ for x in range (0,50):#get an image <number> amount of times
         dbmanager.addItem(title, picture, "description", "flair", "dogs")
 #===========================================================
 
-dbmanager.showLists() #testing
+#dbmanager.showLists() #testing
 
